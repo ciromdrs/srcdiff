@@ -20,7 +20,7 @@ class Diff2:
         self.diffa = [EMPTY] * (self.n + self.m)
         self.diffb = [EMPTY] * (self.n + self.m)
         # Table for dynamic programming
-        self.t = [[None] * self.n] * self.m
+        self.t = [[-1] * self.m] * self.n
 
     @property
     def n(self):

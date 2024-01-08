@@ -31,7 +31,7 @@ class TestDiff2(unittest.TestCase):
         self.assertEqual(self.diff.diffb,
                          [EMPTY] * (self.diff.n + self.diff.m))
         # The dynamic programming table starts empty and has size `n * m`
-        self.assertEqual(self.diff.t, [[None] * self.diff.n] * self.diff.m)
+        self.assertEqual(self.diff.t, [[-1] * self.diff.m] * self.diff.n)
 
     def test_n(self):
         """
