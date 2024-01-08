@@ -53,6 +53,15 @@ class TestDiff2(unittest.TestCase):
 
         self.diff._compute_base_row_and_column()
 
+        # The distances in the base row are 0, 1, 2, ... , m
+        self.assertEqual(self.diff.t[0], list(range(self.diff.m + 1)))
+        # The distances in the base column are 0, 1, 2, ... , n
+        for i in range(self.diff.n + 1):
+            self.assertEqual(
+                i,
+                self.diff.t[i][0],
+                f'Expected t[{i}][0] to be {i}, got {self.diff.t[i][0]}.')
+
     def test_returns_all_characters(self):
         """
         Test if all characters are in the diff result.

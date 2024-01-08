@@ -20,7 +20,9 @@ class Diff2:
         self.diffa = [EMPTY] * (self.n + self.m)
         self.diffb = [EMPTY] * (self.n + self.m)
         # Table for dynamic programming. The +1's are for the empty string.
-        self.t = [[-1] * (self.m + 1)] * (self.n + 1)
+        self.t = []
+        for _ in range(self.n + 1):
+            self.t.append([-1] * (self.m + 1))
 
     @property
     def n(self):
