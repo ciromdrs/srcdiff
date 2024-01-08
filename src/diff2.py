@@ -42,7 +42,7 @@ class Diff2:
 
 # FUNCTIONS
 
-def diff2(a: str, b: str) -> Diff2|None:
+def diff2(a: str, b: str) -> Diff2:
     '''Performs a diff between strings `a`and `b`.'''
-    result = None
+    result = Diff2(a, b)
     return result
