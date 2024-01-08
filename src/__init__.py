@@ -1,2 +1,2 @@
 # CONSTANTS
-EMPTY = 0  # Empty space to fill a diff
+EMPTY = ''  # Empty space to fill a diff
