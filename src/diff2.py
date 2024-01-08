@@ -19,8 +19,8 @@ class Diff2:
         # The size n + m is for the case when `a` and `b` are competely different
         self.diffa = [EMPTY] * (self.n + self.m)
         self.diffb = [EMPTY] * (self.n + self.m)
-        # Table for dynamic programming
-        self.t = [[-1] * self.m] * self.n
+        # Table for dynamic programming. The +1's are for the empty string.
+        self.t = [[-1] * (self.m + 1)] * (self.n + 1)
 
     @property
     def n(self):
