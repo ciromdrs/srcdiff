@@ -28,9 +28,40 @@ class Diff2:
         self._initialize()
         self._compute_base_row_and_column()
 
-        self.diffb = list(self._b) + ([EMPTY] * self.n)
+        # Main loop
+        # Fill `t` using row 0 and column 0
+        for i in range(1, self.n + 1):
+            for j in range(1, self.m + 1):
+                # If the characters are equal, shift
+                if self._get_row_char_at(i) == self._get_col_char_at(j):
+                    self._shift(i, j)
+                else:
+                    # Characters differ, try to push b first
+                    if self.t[i][j-1] <= self.t[i-1][j]:
+                        self._push_b(i, j)
+                    else:
+                        self._push_a(i, j)
 
-        return self.distance
+        return self.t[self.n][self.m]
+
+    def _push_a(self, i: int, j: int):
+        """
+        Get the distance from top and add 1.
+        """
+        self.t[i][j] = self.t[i-1][j] + 1
+
+    def _push_b(self, i: int, j: int):
+        """
+        Get the distance from left and add 1.
+        """
+        self.t[i][j] = self.t[i][j-1] + 1
+
+    def _shift(self, i: int, j: int):
+        """
+        Copy the distance from the diagonal.
+        """
+        self.t[i][j] = self.t[i-1][j-1]
+
 
     @property
     def n(self):

@@ -58,6 +58,23 @@ class TestDiff2(unittest.TestCase):
                 self.diff.t[i][0],
                 f'Expected t[{i}][0] to be {i}, got {self.diff.t[i][0]}.')
 
+    def test_run(self):
+        """
+        Test if the minimum edit distance and the dynamic programming table are correct.
+        """
+        distance = self.diff.run()
+
+        self.assertEqual(5, distance)
+        expected_table = [
+            [0, 1, 2, 3, 4, 5, 6],
+            [1, 0, 1, 2, 3, 4, 5],
+            [2, 1, 2, 3, 4, 5, 6],
+            [3, 2, 3, 4, 5, 6, 7],
+            [4, 3, 4, 5, 6, 5, 6],
+            [5, 4, 5, 6, 7, 6, 5],
+        ]
+        self.assertEqual(expected_table, self.diff.t)
+
     def test_returns_all_characters(self):
         """
         Test if all characters are in the diff result.
