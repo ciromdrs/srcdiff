@@ -9,7 +9,27 @@ class TestDiff2(unittest.TestCase):
     def setUpClass(cls):
         cls.a = 'paper'
         cls.b = 'poster'
-        cls.diff = diff2(cls.a, cls.b)
+        cls.diff = Diff2(cls.a, cls.b)
+
+    def test_init(self):
+        """
+        Test if a Diff2 object is instantiated correctly.
+        """
+        # Assert the strings are equal
+        self.assertEqual(self.diff._a, self.a)
+        self.assertEqual(self.diff._b, self.b)
+
+    def test_n(self):
+        """
+        Test if propery `n` is equal to the length of string `a`.
+        """
+        self.assertEqual(len(self.a), self.diff.n)
+    
+    def test_m(self):
+        """
+        Test if propery `m` is equal to the length of string `b`.
+        """
+        self.assertEqual(len(self.b), self.diff.m)
 
     def test_returns_all_characters(self):
         """
