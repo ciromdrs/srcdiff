@@ -5,11 +5,10 @@ from src.diff2 import diff2, Diff2, EMPTY
 
 
 class TestDiff2(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.a = 'paper'
-        cls.b = 'poster'
-        cls.diff = Diff2(cls.a, cls.b)
+    def setUp(self):
+        self.a = 'paper'
+        self.b = 'poster'
+        self.diff = Diff2(self.a, self.b)
 
     def test_init(self):
         """
