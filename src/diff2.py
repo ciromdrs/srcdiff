@@ -40,9 +40,9 @@ class Diff2:
         """
         Compute the base row and column of `t`.
         """
-        for k in range(self.n):
+        for k in range(self.n + 1):
             self.t[k][0] = k
-        for k in range(self.m):
+        for k in range(self.m + 1):
             self.t[0][k] = k
 
 

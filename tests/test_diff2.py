@@ -38,12 +38,20 @@ class TestDiff2(unittest.TestCase):
         Test if propery `n` is equal to the length of string `a`.
         """
         self.assertEqual(len(self.a), self.diff.n)
-    
+
     def test_m(self):
         """
         Test if propery `m` is equal to the length of string `b`.
         """
         self.assertEqual(len(self.b), self.diff.m)
+
+    def test_compute_base_row(self):
+        """
+        Test the computation of the base row for the dynamic programming table.
+        """
+        self.diff._initialize()
+
+        self.diff._compute_base_row_and_column()
 
     def test_returns_all_characters(self):
         """
@@ -77,9 +85,3 @@ class TestDiff2(unittest.TestCase):
         """
         self.skipTest('Not implemented yet')
         self.assertEqual(['p', EMPTY, EMPTY, 'o', 's', 't', 'e', 'r'], self.db)
-
-    def test_compute_base_row(self):
-        """
-        Test the computation of the base row for the dynamic programming table.
-        """
-        self.skipTest('Not implemented yet')
