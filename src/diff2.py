@@ -15,10 +15,6 @@ class Diff2:
         """
         Initialize data structures to perform the diff.
         """
-        # Diff results, one for each string
-        # The size n + m is for the case when `a` and `b` are competely different
-        self.diffa = [EMPTY] * (self.n + self.m)
-        self.diffb = [EMPTY] * (self.n + self.m)
         # Table for dynamic programming. The +1's are for the empty string.
         self.t = []
         for _ in range(self.n + 1):
@@ -31,7 +27,7 @@ class Diff2:
         """
         self._initialize()
         self._compute_base_row_and_column()
-        self.diffa = list(self._a) + ([EMPTY] * self.m)
+
         self.diffb = list(self._b) + ([EMPTY] * self.n)
 
         return self.distance
