@@ -10,11 +10,17 @@ class Diff2:
     def __init__(self, a: str, b: str):
         self._a = a
         self._b = b
-        # Diff structure. It contains 2 rows, one for each string. Each string is
-        # of size n + m for the case when `a` and `b` are competely different.
-        self.diff = [[EMPTY] * (self.n + self.m)] * 2
+
+    def _initialize(self):
+        """
+        Initialize data structures to perform the diff.
+        """
+        # Diff results, one for each string
+        # The size n + m is for the case when `a` and `b` are competely different
+        self.diffa = [EMPTY] * (self.n + self.m)
+        self.diffb = [EMPTY] * (self.n + self.m)
         # Table for dynamic programming
-        self.t = [[] * self.n] * self.m
+        self.t = [[None] * self.n] * self.m
 
     @property
     def n(self):

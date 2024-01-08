@@ -1,7 +1,7 @@
 """Tests for the diff2 script."""
 
 import unittest
-from src.diff2 import diff2, Diff2
+from src.diff2 import diff2, Diff2, EMPTY
 
 
 class TestDiff2(unittest.TestCase):
@@ -13,11 +13,25 @@ class TestDiff2(unittest.TestCase):
 
     def test_init(self):
         """
-        Test if a Diff2 object is instantiated correctly.
+        Test if a Diff2 object is instantiated correctly using the constructor.
         """
         # Assert the strings are equal
         self.assertEqual(self.diff._a, self.a)
         self.assertEqual(self.diff._b, self.b)
+
+    def test_initialize(self):
+        """
+        Test if the data structures for the diff are initialized correctly.
+        """
+        self.diff._initialize()
+
+        # Diff results start empty and have length `n + m`
+        self.assertEqual(self.diff.diffa,
+                         [EMPTY] * (self.diff.n + self.diff.m))
+        self.assertEqual(self.diff.diffb,
+                         [EMPTY] * (self.diff.n + self.diff.m))
+        # The dynamic programming table starts empty and has size `n * m`
+        self.assertEqual(self.diff.t, [[None] * self.diff.n] * self.diff.m)
 
     def test_n(self):
         """
