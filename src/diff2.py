@@ -24,6 +24,18 @@ class Diff2:
         for _ in range(self.n + 1):
             self.t.append([-1] * (self.m + 1))
 
+    def run(self):
+        """
+        Run the diff.
+        Returns the edit distance.
+        """
+        self._initialize()
+        self._compute_base_row_and_column()
+        self.diffa = list(self._a) + ([EMPTY] * self.m)
+        self.diffb = list(self._b) + ([EMPTY] * self.n)
+
+        return self.distance
+
     @property
     def n(self):
         """

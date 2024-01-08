@@ -65,11 +65,12 @@ class TestDiff2(unittest.TestCase):
         """
         Test if all characters are in the diff result.
         """
-        self.skipTest('Not implemented yet')
+        self.diff.run()
+
         for char in self.a:
-            self.assertIn(char, self.diff.a)
+            self.assertIn(char, self.diff.diffa)
         for char in self.b:
-            self.assertIn(char, self.diff.b)
+            self.assertIn(char, self.diff.diffb)
 
     def test_number_of_blank_spaces(self):
         """
