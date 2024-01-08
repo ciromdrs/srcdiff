@@ -1,2 +1,5 @@
 # CONSTANTS
-EMPTY = ''  # Empty space to fill a diff
+
+# Empty space to fill a diff
+# I believe this is the best character to represent the empty string.
+EMPTY = f'\0'
