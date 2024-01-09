@@ -74,38 +74,3 @@ class TestDiff2(unittest.TestCase):
             [5, 4, 5, 6, 7, 6, 5],
         ]
         self.assertEqual(expected_table, self.diff.t)
-
-    def test_returns_all_characters(self):
-        """
-        Test if all characters are in the diff result.
-        """
-        self.skipTest('Not implemented yet.')
-        self.diff.run()
-
-        for char in self.a:
-            self.assertIn(char, self.diff.diffa)
-        for char in self.b:
-            self.assertIn(char, self.diff.diffb)
-
-    def test_number_of_blank_spaces(self):
-        """
-        Test the amount of fill spaces.
-        """
-        self.skipTest('Not implemented yet')
-        self.assertEqual(3, self.da.count(EMPTY))
-        self.assertEqual(2, self.db.count(EMPTY))
-
-    def test_diffa_result(self):
-        """
-        Test the diff result of `a`.
-        """
-        self.skipTest('Not implemented yet')
-        self.assertEqual(
-            ['p', 'a', 'p', EMPTY, EMPTY, EMPTY, 'e', 'r'], self.da)
-
-    def test_diffb_result(self):
-        """
-        Test the diff result of `b`.
-        """
-        self.skipTest('Not implemented yet')
-        self.assertEqual(['p', EMPTY, EMPTY, 'o', 's', 't', 'e', 'r'], self.db)
