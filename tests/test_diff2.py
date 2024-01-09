@@ -74,3 +74,24 @@ class TestDiff2(unittest.TestCase):
             [5, 4, 5, 6, 7, 6, 5],
         ]
         self.assertEqual(expected_table, self.diff.t)
+
+    def test_get_row_char_at(self):
+        """
+        Test if it returns the correct character corresponding to index `i` of the row in the dynamic programming table.
+        """
+        self.assertEqual('p', self.diff._get_row_char_at(1))
+        self.assertEqual('a', self.diff._get_row_char_at(2))
+        self.assertEqual('p', self.diff._get_row_char_at(3))
+        self.assertEqual('e', self.diff._get_row_char_at(4))
+        self.assertEqual('r', self.diff._get_row_char_at(5))
+
+    def test_get_col_char_at(self):
+        """
+        Test if it returns the correct character corresponding to index `j` of the column in the dynamic programming table.
+        """
+        self.assertEqual('p', self.diff._get_col_char_at(1))
+        self.assertEqual('o', self.diff._get_col_char_at(2))
+        self.assertEqual('s', self.diff._get_col_char_at(3))
+        self.assertEqual('t', self.diff._get_col_char_at(4))
+        self.assertEqual('e', self.diff._get_col_char_at(5))
+        self.assertEqual('r', self.diff._get_col_char_at(6))
