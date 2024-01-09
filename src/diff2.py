@@ -77,6 +77,14 @@ class Diff2:
         """
         return len(self._b)
 
+    def _get_row_char_at(self, i: int):
+        # The -1 compensates the \0's added to the table
+        return self._a[i-1]
+
+    def _get_col_char_at(self, j: int):
+        # The -1 compensates the \0's added to the table
+        return self._b[j-1]
+
     def _compute_base_row_and_column(self):
         """
         Compute the base row and column of `t`.
