@@ -43,11 +43,17 @@ class Diff2:
         """
         raise NotImplemented()
 
-    def _shift(self, i: int, j: int):
+    def _shift(self, ij: list[int] , diffa: list[str], diffb: list[str]):
         """
-        TODO
+        Copy the next common character of the sequences and increment both indices.
         """
-        raise NotImplemented()
+        # Copy the common character
+        char = self._get_row_char_at(ij[0])
+        diffa.append(char)
+        diffb.append(char)
+        # Increment i and j
+        ij[0] += 1
+        ij[1] += 1
 
     @property
     def n(self):

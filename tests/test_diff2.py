@@ -105,3 +105,17 @@ class TestDiff2(unittest.TestCase):
         self.assertEqual('t', self.diff._get_col_char_at(4))
         self.assertEqual('e', self.diff._get_col_char_at(5))
         self.assertEqual('r', self.diff._get_col_char_at(6))
+
+    def test_shift(self):
+        """
+        Test the shift operation.
+        """
+        ij = [1, 1]
+        diffa = []
+        diffb = []
+
+        self.diff._shift(ij, diffa, diffb)
+
+        self.assertEqual([2, 2], ij)
+        self.assertEqual(['p'], diffa)
+        self.assertEqual(['p'], diffb)
