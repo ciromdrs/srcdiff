@@ -119,3 +119,17 @@ class TestDiff2(unittest.TestCase):
         self.assertEqual([2, 2], ij)
         self.assertEqual(['p'], diffa)
         self.assertEqual(['p'], diffb)
+
+    def test_push_b(self):
+        """
+        Test the push b operation.
+        """
+        ij = [2, 2]
+        diffa = ['p']
+        diffb = ['p']
+
+        self.diff._push_b(ij, diffa, diffb)
+
+        self.assertEqual([3, 2], ij)
+        self.assertEqual(['p', 'a'], diffa)
+        self.assertEqual(['p', EMPTY], diffb)

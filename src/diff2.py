@@ -37,11 +37,16 @@ class Diff2:
         """
         raise NotImplemented()
 
-    def _push_b(self, i: int, j: int):
+    def _push_b(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
-        TODO
+        Copy the character from a and push b.
         """
-        raise NotImplemented()
+        # Copy the character from a
+        char = self._get_row_char_at(ij[0])
+        diffa.append(char)
+        diffb.append(EMPTY)
+        # Increment i
+        ij[0] += 1
 
     def _shift(self, ij: list[int] , diffa: list[str], diffb: list[str]):
         """
