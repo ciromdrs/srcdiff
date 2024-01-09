@@ -35,37 +35,33 @@ class Diff2:
 
     def _push_a(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
-        Copy the character from b and push a.
+        Copy from b and push a.
         """
-        # Copy the character from b
         char = self._get_col_char_at(ij[1])
-        diffa.append(EMPTY)
-        diffb.append(char)
-        # Increment j
-        ij[1] += 1
+        diffa.insert(0, EMPTY)  # Push a
+        diffb.insert(0, char)  # Copy from b
+        ij[1] -= 1  # Decrement j
 
     def _push_b(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
-        Copy the character from a and push b.
+        Copy from a and push b.
         """
-        # Copy the character from a
         char = self._get_row_char_at(ij[0])
-        diffa.append(char)
-        diffb.append(EMPTY)
-        # Increment i
-        ij[0] += 1
+        diffa.insert(0, char)  # Copy from a
+        diffb.insert(0, EMPTY)  # Push b
+        ij[0] -= 1  # Decrement i
 
-    def _shift(self, ij: list[int] , diffa: list[str], diffb: list[str]):
+    def _shift(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
         Copy the next common character of the sequences and increment both indices.
         """
         # Copy the common character
         char = self._get_row_char_at(ij[0])
-        diffa.append(char)
-        diffb.append(char)
-        # Increment i and j
-        ij[0] += 1
-        ij[1] += 1
+        diffa.insert(0, char)
+        diffb.insert(0, char)
+        # Decrement i and j
+        ij[0] -= 1
+        ij[1] -= 1
 
     @property
     def n(self):

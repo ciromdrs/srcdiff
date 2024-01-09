@@ -110,40 +110,42 @@ class TestDiff2(unittest.TestCase):
         """
         Test the shift operation.
         """
-        ij = [1, 1]
+        ij = [5, 6]
         diffa = []
         diffb = []
 
         self.diff._shift(ij, diffa, diffb)
 
-        self.assertEqual([2, 2], ij)
-        self.assertEqual(['p'], diffa)
-        self.assertEqual(['p'], diffb)
+        self.assertEqual([4, 5], ij)
+        self.assertEqual(['r'], diffa)
+        self.assertEqual(['r'], diffb)
 
     def test_push_b(self):
         """
         Test the push b operation.
         """
-        ij = [2, 2]
-        diffa = ['p']
-        diffb = ['p']
+        ij = [2, 0]
+        diffa_old = ['p', EMPTY, EMPTY, EMPTY, 'e', 'r']
+        diffb_old = ['p', 'o', 's', 't', 'e', 'r']
+        diffa = diffa_old.copy()
+        diffb = diffb_old.copy()
 
         self.diff._push_b(ij, diffa, diffb)
 
-        self.assertEqual([3, 2], ij)
-        self.assertEqual(['p', 'a'], diffa)
-        self.assertEqual(['p', EMPTY], diffb)
+        self.assertEqual([1, 0], ij)
+        self.assertEqual(['a'] + diffa_old, diffa)
+        self.assertEqual([EMPTY] + diffb_old, diffb)
 
     def test_push_a(self):
         """
         Test the push a operation.
         """
-        ij = [2, 2]
-        diffa = ['p']
-        diffb = ['p']
+        ij = [3, 4]
+        diffa = ['e', 'r']
+        diffb = ['e', 'r']
 
         self.diff._push_a(ij, diffa, diffb)
 
-        self.assertEqual([2, 3], ij)
-        self.assertEqual(['p', EMPTY], diffa)
-        self.assertEqual(['p', 'o'], diffb)
+        self.assertEqual([3, 3], ij)
+        self.assertEqual([EMPTY, 'e', 'r'], diffa)
+        self.assertEqual(['t', 'e', 'r'], diffb)
