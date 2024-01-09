@@ -32,10 +32,17 @@ class Diff2:
         return self.matrix[self.n][self.m]
 
     def _push_a(self, i: int, j: int):
+
+    def _push_a(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
-        TODO
+        Copy the character from b and push a.
         """
-        raise NotImplemented()
+        # Copy the character from b
+        char = self._get_col_char_at(ij[1])
+        diffa.append(EMPTY)
+        diffb.append(char)
+        # Increment j
+        ij[1] += 1
 
     def _push_b(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """

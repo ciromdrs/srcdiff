@@ -133,3 +133,17 @@ class TestDiff2(unittest.TestCase):
         self.assertEqual([3, 2], ij)
         self.assertEqual(['p', 'a'], diffa)
         self.assertEqual(['p', EMPTY], diffb)
+
+    def test_push_a(self):
+        """
+        Test the push a operation.
+        """
+        ij = [2, 2]
+        diffa = ['p']
+        diffb = ['p']
+
+        self.diff._push_a(ij, diffa, diffb)
+
+        self.assertEqual([2, 3], ij)
+        self.assertEqual(['p', EMPTY], diffa)
+        self.assertEqual(['p', 'o'], diffb)
