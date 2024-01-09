@@ -9,6 +9,14 @@ class TestDiff2(unittest.TestCase):
         self.a = 'paper'
         self.b = 'poster'
         self.diff = Diff2(self.a, self.b)
+        self.expected_matrix = [
+            [0, 1, 2, 3, 4, 5, 6],
+            [1, 0, 1, 2, 3, 4, 5],
+            [2, 1, 2, 3, 4, 5, 6],
+            [3, 2, 3, 4, 5, 6, 7],
+            [4, 3, 4, 5, 6, 5, 6],
+            [5, 4, 5, 6, 7, 6, 5],
+        ]
 
     def test_init(self):
         """
@@ -65,15 +73,7 @@ class TestDiff2(unittest.TestCase):
         distance = self.diff.run()
 
         self.assertEqual(5, distance)
-        expected_matrix = [
-            [0, 1, 2, 3, 4, 5, 6],
-            [1, 0, 1, 2, 3, 4, 5],
-            [2, 1, 2, 3, 4, 5, 6],
-            [3, 2, 3, 4, 5, 6, 7],
-            [4, 3, 4, 5, 6, 5, 6],
-            [5, 4, 5, 6, 7, 6, 5],
-        ]
-        self.assertEqual(expected_matrix, self.diff.matrix)
+        self.assertEqual(self.expected_matrix, self.diff.matrix)
 
     def test_get_row_char_at(self):
         """
