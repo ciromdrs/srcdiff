@@ -149,3 +149,12 @@ class TestDiff2(unittest.TestCase):
         self.assertEqual([3, 3], ij)
         self.assertEqual([EMPTY, 'e', 'r'], diffa)
         self.assertEqual(['t', 'e', 'r'], diffb)
+
+    def test_build_diffs(self):
+        self.diff._initialize()
+        self.diff._compute_distance_matrix()
+
+        diffa, diffb = self.diff._build_diffs()
+        self.assertEqual(['p', 'a', 'p', EMPTY, EMPTY, EMPTY, 'e', 'r'], diffa)
+        self.assertEqual([EMPTY, EMPTY, 'p', 'o', 's', 't', 'e', 'r'], diffb)
+        

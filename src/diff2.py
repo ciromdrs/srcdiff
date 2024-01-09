@@ -31,7 +31,33 @@ class Diff2:
 
         return self.matrix[self.n][self.m]
 
-    def _push_a(self, i: int, j: int):
+    def _build_diffs(self) -> tuple[list[str], list[str]]:
+        diffa: list[str] = []
+        diffb: list[str] = []
+        # Indices i and j. This allows us to pass these as arguments by reference.
+        ij = [self.n, self.m]
+        i, j = ij
+        while i > 0 and j > 0:
+            # If the characters are equal
+            if self._get_row_char_at(i) == self._get_col_char_at(j):
+                self._shift(ij, diffa, diffb)
+            else:
+                # Characters differ, try to push b first
+                if self.matrix[i][j-1] > self.matrix[i-1][j]:
+                    self._push_b(ij, diffa, diffb)
+                else:
+                    self._push_a(ij, diffa, diffb)
+            # Variables i and j must be updated at the end of every iteration
+            i, j = ij
+        # Copy the remainder of a or b
+        while i > 0:
+            self._push_b(ij, diffa, diffb)
+            i, j = ij
+        while j > 0:
+            self._push_a(ij, diffa, diffb)
+            i, j = ij
+
+        return diffa, diffb
 
     def _push_a(self, ij: list[int], diffa: list[str], diffb: list[str]):
         """
