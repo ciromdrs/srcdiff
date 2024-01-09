@@ -77,9 +77,9 @@ class Diff2:
         # The -1 compensates the \0's added to the matrix
         return self._b[j-1]
 
-    def _compute_base_row_and_column(self):
+    def _compute_base_distances(self):
         """
-        Compute the base row and column of `t`.
+        Compute the base distances of the matrix.
         """
         for k in range(self.n + 1):
             self.matrix[k][0] = k
@@ -91,7 +91,7 @@ class Diff2:
         Compute the distance matrix.
         """
         # First, compute the base distances
-        self._compute_base_row_and_column()
+        self._compute_base_distances()
         # Then, compute the remainder using them
         for i in range(1, self.n + 1):
             for j in range(1, self.m + 1):

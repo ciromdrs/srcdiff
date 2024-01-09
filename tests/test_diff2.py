@@ -41,13 +41,13 @@ class TestDiff2(unittest.TestCase):
         """
         self.assertEqual(len(self.b), self.diff.m)
 
-    def test_compute_base_row(self):
+    def test_compute_base_distances(self):
         """
-        Test the computation of the base row for the dynamic programming matrix.
+        Test the computation of the base distances fo the dynamic programming matrix.
         """
         self.diff._initialize()
 
-        self.diff._compute_base_row_and_column()
+        self.diff._compute_base_distances()
 
         # The distances in the base row are 0, 1, 2, ... , m
         self.assertEqual(self.diff.matrix[0], list(range(self.diff.m + 1)))
@@ -56,7 +56,7 @@ class TestDiff2(unittest.TestCase):
             self.assertEqual(
                 i,
                 self.diff.matrix[i][0],
-                f'Expected t[{i}][0] to be {i}, got {self.diff.matrix[i][0]}.')
+                f'Expected matrix[{i}][0] to be {i}, got {self.diff.matrix[i][0]}.')
 
     def test_run(self):
         """
