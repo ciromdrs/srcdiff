@@ -1,6 +1,6 @@
 """Tests for the diff2 script."""
 
-import unittest
+import unittest  # TODO: Switch to pytest
 from src.diff2 import diff2, Diff2, EMPTY
 
 
