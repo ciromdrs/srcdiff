@@ -78,10 +78,16 @@ class Diff2:
         return len(self._b)
 
     def _get_row_char_at(self, i: int):
+        """
+        Get the char corresponding to index `i` of the row in the dynamic programming table.
+        """
         # The -1 compensates the \0's added to the table
         return self._a[i-1]
 
     def _get_col_char_at(self, j: int):
+        """
+        Get the char corresponding to index `j` of the column in the dynamic programming table.
+        """
         # The -1 compensates the \0's added to the table
         return self._b[j-1]
 
