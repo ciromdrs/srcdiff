@@ -26,7 +26,7 @@ class Diff2:
         Returns the edit distance.
         """
         self._initialize()
-        
+
         self._compute_distance_matrix()
 
         return self.matrix[self.n][self.m]
@@ -145,6 +145,7 @@ class Diff2:
                         self.matrix[i][j] = self.matrix[i][j-1] + 1
                     else:
                         self.matrix[i][j] = self.matrix[i-1][j] + 1
+
 
 # FUNCTIONS
 

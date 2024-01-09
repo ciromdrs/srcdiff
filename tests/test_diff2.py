@@ -157,4 +157,3 @@ class TestDiff2(unittest.TestCase):
         diffa, diffb = self.diff._build_diffs()
         self.assertEqual(['p', 'a', 'p', EMPTY, EMPTY, EMPTY, 'e', 'r'], diffa)
         self.assertEqual([EMPTY, EMPTY, 'p', 'o', 's', 't', 'e', 'r'], diffb)
-        
