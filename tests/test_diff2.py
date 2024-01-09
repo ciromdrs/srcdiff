@@ -24,9 +24,9 @@ class TestDiff2(unittest.TestCase):
         """
         self.diff._initialize()
 
-        # The dynamic programming table starts empty and has size `(n+1) * (m+1)`
+        # The dynamic programming matrix starts empty and has size `(n+1) * (m+1)`
         self.assertEqual(
-            self.diff.t,
+            self.diff.matrix,
             [[-1] * (self.diff.m + 1)] * (self.diff.n + 1))
 
     def test_n(self):
@@ -43,29 +43,29 @@ class TestDiff2(unittest.TestCase):
 
     def test_compute_base_row(self):
         """
-        Test the computation of the base row for the dynamic programming table.
+        Test the computation of the base row for the dynamic programming matrix.
         """
         self.diff._initialize()
 
         self.diff._compute_base_row_and_column()
 
         # The distances in the base row are 0, 1, 2, ... , m
-        self.assertEqual(self.diff.t[0], list(range(self.diff.m + 1)))
+        self.assertEqual(self.diff.matrix[0], list(range(self.diff.m + 1)))
         # The distances in the base column are 0, 1, 2, ... , n
         for i in range(self.diff.n + 1):
             self.assertEqual(
                 i,
-                self.diff.t[i][0],
-                f'Expected t[{i}][0] to be {i}, got {self.diff.t[i][0]}.')
+                self.diff.matrix[i][0],
+                f'Expected t[{i}][0] to be {i}, got {self.diff.matrix[i][0]}.')
 
     def test_run(self):
         """
-        Test if the minimum edit distance and the dynamic programming table are correct.
+        Test if the minimum edit distance and the dynamic programming matrix are correct.
         """
         distance = self.diff.run()
 
         self.assertEqual(5, distance)
-        expected_table = [
+        expected_matrix = [
             [0, 1, 2, 3, 4, 5, 6],
             [1, 0, 1, 2, 3, 4, 5],
             [2, 1, 2, 3, 4, 5, 6],
@@ -73,11 +73,11 @@ class TestDiff2(unittest.TestCase):
             [4, 3, 4, 5, 6, 5, 6],
             [5, 4, 5, 6, 7, 6, 5],
         ]
-        self.assertEqual(expected_table, self.diff.t)
+        self.assertEqual(expected_matrix, self.diff.matrix)
 
     def test_get_row_char_at(self):
         """
-        Test if it returns the correct character corresponding to index `i` of the row in the dynamic programming table.
+        Test if it returns the correct character corresponding to index `i` of the row in the dynamic programming matrix.
         """
         self.assertEqual('p', self.diff._get_row_char_at(1))
         self.assertEqual('a', self.diff._get_row_char_at(2))
@@ -87,7 +87,7 @@ class TestDiff2(unittest.TestCase):
 
     def test_get_col_char_at(self):
         """
-        Test if it returns the correct character corresponding to index `j` of the column in the dynamic programming table.
+        Test if it returns the correct character corresponding to index `j` of the column in the dynamic programming matrix.
         """
         self.assertEqual('p', self.diff._get_col_char_at(1))
         self.assertEqual('o', self.diff._get_col_char_at(2))

@@ -15,10 +15,10 @@ class Diff2:
         """
         Initialize data structures to perform the diff.
         """
-        # Table for dynamic programming. The +1's are for the empty string.
-        self.t = []
+        # Matrix for dynamic programming. The +1's are for the empty string.
+        self.matrix = []
         for _ in range(self.n + 1):
-            self.t.append([-1] * (self.m + 1))
+            self.matrix.append([-1] * (self.m + 1))
 
     def run(self):
         """
@@ -35,15 +35,15 @@ class Diff2:
                 # If the characters are equal
                 if self._get_row_char_at(i) == self._get_col_char_at(j):
                     # Copy the distance from the diagonal
-                    self.t[i][j] = self.t[i-1][j-1]
+                    self.matrix[i][j] = self.matrix[i-1][j-1]
                 else:
                     # Characters differ, try to push b first
-                    if self.t[i][j-1] <= self.t[i-1][j]:
-                        self.t[i][j] = self.t[i][j-1] + 1
+                    if self.matrix[i][j-1] <= self.matrix[i-1][j]:
+                        self.matrix[i][j] = self.matrix[i][j-1] + 1
                     else:
-                        self.t[i][j] = self.t[i-1][j] + 1
+                        self.matrix[i][j] = self.matrix[i-1][j] + 1
 
-        return self.t[self.n][self.m]
+        return self.matrix[self.n][self.m]
 
     def _push_a(self, i: int, j: int):
         """
@@ -79,16 +79,16 @@ class Diff2:
 
     def _get_row_char_at(self, i: int):
         """
-        Get the char corresponding to index `i` of the row in the dynamic programming table.
+        Get the char corresponding to index `i` of the row in the dynamic programming matrix.
         """
-        # The -1 compensates the \0's added to the table
+        # The -1 compensates the \0's added to the matrix
         return self._a[i-1]
 
     def _get_col_char_at(self, j: int):
         """
-        Get the char corresponding to index `j` of the column in the dynamic programming table.
+        Get the char corresponding to index `j` of the column in the dynamic programming matrix.
         """
-        # The -1 compensates the \0's added to the table
+        # The -1 compensates the \0's added to the matrix
         return self._b[j-1]
 
     def _compute_base_row_and_column(self):
@@ -96,9 +96,9 @@ class Diff2:
         Compute the base row and column of `t`.
         """
         for k in range(self.n + 1):
-            self.t[k][0] = k
+            self.matrix[k][0] = k
         for k in range(self.m + 1):
-            self.t[0][k] = k
+            self.matrix[0][k] = k
 
 
 # FUNCTIONS
