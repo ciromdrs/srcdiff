@@ -20,7 +20,7 @@ class Diff2:
         for _ in range(self.n + 1):
             self.matrix.append([-1] * (self.m + 1))
 
-    def run(self):
+    def run(self) -> tuple[int, list[str], list[str]]:
         """
         Run the diff.
         Returns the edit distance.
@@ -29,7 +29,9 @@ class Diff2:
 
         self._compute_distance_matrix()
 
-        return self.matrix[self.n][self.m]
+        diffa, diffb = self._build_diffs()
+
+        return self.matrix[self.n][self.m], diffa, diffb
 
     def _build_diffs(self) -> tuple[list[str], list[str]]:
         diffa: list[str] = []
