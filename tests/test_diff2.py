@@ -66,6 +66,16 @@ class TestDiff2(unittest.TestCase):
                 self.diff.matrix[i][0],
                 f'Expected matrix[{i}][0] to be {i}, got {self.diff.matrix[i][0]}.')
 
+    def test_compute_distance_matrix(self):
+        """
+        Test the computation of the distance matrix.
+        """
+        self.diff._initialize()
+
+        self.diff._compute_distance_matrix()
+
+        self.assertEqual(self.expected_matrix, self.diff.matrix)
+
     def test_run(self):
         """
         Test if the minimum edit distance and the dynamic programming matrix are correct.
