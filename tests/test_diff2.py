@@ -1,7 +1,8 @@
 """Tests for the diff2 script."""
 
 import unittest  # TODO: Switch to pytest
-from src.diff2 import diff2, Diff2, EMPTY
+from src.srcdiff import EMPTY
+from src.srcdiff.diff2 import Diff2
 
 
 class TestDiff2(unittest.TestCase):

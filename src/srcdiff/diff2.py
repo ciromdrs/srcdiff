@@ -1,7 +1,7 @@
 '''Perform diffs of 2 source-code files.'''
 
 
-from . import EMPTY
+from src.srcdiff import EMPTY
 
 
 # CLASSES
