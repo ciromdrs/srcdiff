@@ -80,7 +80,7 @@ class TestDiff2(unittest.TestCase):
         """
         Test if the minimum edit distance and the dynamic programming matrix are correct.
         """
-        distance = self.diff.run()
+        distance, _, _ = self.diff.run()
 
         self.assertEqual(5, distance)
         self.assertEqual(self.expected_matrix, self.diff.matrix)
