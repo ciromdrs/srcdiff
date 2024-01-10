@@ -40,15 +40,22 @@ class Diff2:
         ij = [self.n, self.m]
         i, j = ij
         while i > 0 and j > 0:
-            # If the characters are equal
-            if self._get_row_char_at(i) == self._get_col_char_at(j):
+            # Get the cost of all operations
+            cost_shift = self.matrix[i-1][j-1]
+            cost_push_a = self.matrix[i][j-1]
+            cost_push_b = self.matrix[i-1][j]
+            # Select the cheapest one
+            cheapest = min([cost_shift, cost_push_a, cost_push_b])
+            if cost_push_b == cheapest:
+                # Try to push b first
+                self._push_b(ij, diffa, diffb)
+            elif cost_shift == cheapest and \
+                    self._get_row_char_at(i) == self._get_col_char_at(j):
+                # Try to copy both then
                 self._shift(ij, diffa, diffb)
             else:
-                # Characters differ, try to push b first
-                if self.matrix[i][j-1] > self.matrix[i-1][j]:
-                    self._push_b(ij, diffa, diffb)
-                else:
-                    self._push_a(ij, diffa, diffb)
+                # Push a finally
+                self._push_a(ij, diffa, diffb)
             # Variables i and j must be updated at the end of every iteration
             i, j = ij
         # Copy the remainder of a or b

@@ -113,6 +113,7 @@ class TestDiff2(unittest.TestCase):
         ij = [5, 6]
         diffa = []
         diffb = []
+        self.diff._initialize()
 
         self.diff._shift(ij, diffa, diffb)
 
@@ -129,6 +130,7 @@ class TestDiff2(unittest.TestCase):
         diffb_old = ['p', 'o', 's', 't', 'e', 'r']
         diffa = diffa_old.copy()
         diffb = diffb_old.copy()
+        self.diff._initialize()
 
         self.diff._push_b(ij, diffa, diffb)
 
@@ -143,6 +145,7 @@ class TestDiff2(unittest.TestCase):
         ij = [3, 4]
         diffa = ['e', 'r']
         diffb = ['e', 'r']
+        self.diff._initialize()
 
         self.diff._push_a(ij, diffa, diffb)
 
@@ -156,4 +159,4 @@ class TestDiff2(unittest.TestCase):
 
         diffa, diffb = self.diff._build_diffs()
         self.assertEqual(['p', 'a', 'p', EMPTY, EMPTY, EMPTY, 'e', 'r'], diffa)
-        self.assertEqual([EMPTY, EMPTY, 'p', 'o', 's', 't', 'e', 'r'], diffb)
+        self.assertEqual(['p', EMPTY, EMPTY, 'o', 's', 't', 'e', 'r'], diffb)
