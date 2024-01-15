@@ -5,7 +5,7 @@ class Tree:
     """Tree structure representing representing Python projects, including abstract syntax trees of scripts and directory nodes.
 
     `type_` is the type of the node, either 'Directory' or the name of an `ast.AST` subclass.
-    `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the value could be `3.14`.
+    `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
     `children` is a list of child `Tree` nodes.
     """
     type_: str = ''
@@ -82,7 +82,7 @@ class Tree:
         if self.value is not None:
             aux = None
             if type(self.value) == str:
-                aux = repr(self.value) # Add quotes to strings
+                aux = repr(self.value)  # Add quotes to strings
             value = f", value={aux}"
         # Children
         children = ''
@@ -128,4 +128,3 @@ class Tree:
                 return False, diff_self_complete, diff_another_complete
         # If all checks passed, they are equal
         return True, None, None
-    
