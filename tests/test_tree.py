@@ -33,11 +33,11 @@ class TestTree(unittest.TestCase):
         """Test if it builds a Tree from a Python script file."""
         # Python scritps and their Tree representation to use in tests.
         data = [
-            ['blank.py', Tree('File', value='tests/data/blank.py', children=[
+            ['blank.py', Tree('File', value='tests/data/scripts/blank.py', children=[
                 Tree('Module'),
             ])
             ],
-            ['str.py', Tree('File', value='tests/data/str.py', children=[
+            ['str.py', Tree('File', value='tests/data/scripts/str.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value='hello'),
@@ -45,7 +45,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['int.py', Tree('File', value='tests/data/int.py', children=[
+            ['int.py', Tree('File', value='tests/data/scripts/int.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=123),
@@ -53,7 +53,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['bool.py', Tree('File', value='tests/data/bool.py', children=[
+            ['bool.py', Tree('File', value='tests/data/scripts/bool.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=False),
@@ -61,7 +61,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['float.py', Tree('File', value='tests/data/float.py', children=[
+            ['float.py', Tree('File', value='tests/data/scripts/float.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=3.14),
@@ -69,7 +69,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['none.py', Tree('File', value='tests/data/none.py', children=[
+            ['none.py', Tree('File', value='tests/data/scripts/none.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant'),
@@ -77,7 +77,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['function.py', Tree('File', value='tests/data/function.py', children=[
+            ['function.py', Tree('File', value='tests/data/scripts/function.py', children=[
                 Tree('Module', children=[
                     Tree('FunctionDef', value='return_a', children=[
                         Tree('arguments', children=[
@@ -104,7 +104,7 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
-            ['class.py', Tree('File', value='tests/data/class.py', children=[
+            ['class.py', Tree('File', value='tests/data/scripts/class.py', children=[
                 Tree('Module', children=[
                     Tree('ClassDef', value='Dummy', children=[
                         Tree('Pass'),
@@ -125,7 +125,7 @@ class TestTree(unittest.TestCase):
         ]
 
         for file, expected in data:
-            path = 'tests/data/' + file
+            path = 'tests/data/scripts/' + file
             with self.subTest(path):
                 got = Tree.from_file(path)
                 res, _, _ = got.equals(expected)
