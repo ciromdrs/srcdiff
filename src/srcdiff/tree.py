@@ -54,7 +54,9 @@ class Tree:
         contents = f.read()
         f.close()
         astree = ast.parse(contents)
-        return cls.from_AST(astree)
+        subtree = cls.from_AST(astree)
+        root = cls('File', filename, [subtree])
+        return root
 
     @classmethod
     def from_dir(cls, path: str) -> 'Tree':

@@ -33,34 +33,51 @@ class TestTree(unittest.TestCase):
         """Test if it builds a Tree from a Python script file."""
         # Python scritps and their Tree representation to use in tests.
         data = [
-            ['blank.py', Tree('Module')],
-            ['str.py', Tree('Module', children=[
-                Tree('Expr', children=[
-                    Tree('Constant', value='hello'),
+            ['blank.py', Tree('File', value='tests/data/blank.py', children=[
+                Tree('Module'),
+            ])
+            ],
+            ['str.py', Tree('File', value='tests/data/str.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Constant', value='hello'),
+                    ]),
                 ]),
-            ])],
-            ['int.py', Tree('Module', children=[
-                Tree('Expr', children=[
-                    Tree('Constant', value=123),
+            ])
+            ],
+            ['int.py', Tree('File', value='tests/data/int.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Constant', value=123),
+                    ]),
                 ]),
-            ])],
-            ['bool.py', Tree('Module', children=[
-                Tree('Expr', children=[
-                    Tree('Constant', value=False),
+            ])
+            ],
+            ['bool.py', Tree('File', value='tests/data/bool.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Constant', value=False),
+                    ]),
                 ]),
-            ])],
-            ['float.py', Tree('Module', children=[
-                Tree('Expr', children=[
-                    Tree('Constant', value=3.14),
+            ])
+            ],
+            ['float.py', Tree('File', value='tests/data/float.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Constant', value=3.14),
+                    ]),
                 ]),
-            ])],
-            ['none.py', Tree('Module', children=[
-                Tree('Expr', children=[
-                    Tree('Constant', value=None),
+            ])
+            ],
+            ['none.py', Tree('File', value='tests/data/none.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Constant'),
+                    ]),
                 ]),
-            ])],
-            [
-                'function.py',
+            ])
+            ],
+            ['function.py', Tree('File', value='tests/data/function.py', children=[
                 Tree('Module', children=[
                     Tree('FunctionDef', value='return_a', children=[
                         Tree('arguments', children=[
@@ -84,31 +101,34 @@ class TestTree(unittest.TestCase):
                             Tree('Load'),
                         ]),
                     ]),
-                ])
-            ],
-            ['class.py', Tree('Module', children=[
-                Tree('ClassDef', value='Dummy', children=[
-                    Tree('Pass'),
                 ]),
-                Tree('ClassDef', value='Dumber', children=[
-                    Tree('Name', value='Dummy', children=[
-                        Tree('Load'),
-                    ]),
-                    Tree('FunctionDef', value='do_nothing', children=[
-                        Tree('arguments', children=[
-                            Tree('arg', value='self'),
-                        ]),
+            ])
+            ],
+            ['class.py', Tree('File', value='tests/data/class.py', children=[
+                Tree('Module', children=[
+                    Tree('ClassDef', value='Dummy', children=[
                         Tree('Pass'),
                     ]),
+                    Tree('ClassDef', value='Dumber', children=[
+                        Tree('Name', value='Dummy', children=[
+                            Tree('Load'),
+                        ]),
+                        Tree('FunctionDef', value='do_nothing', children=[
+                            Tree('arguments', children=[
+                                Tree('arg', value='self'),
+                            ]),
+                            Tree('Pass'),
+                        ]),
+                    ]),
                 ]),
-            ])],
+            ])]
         ]
 
         for file, expected in data:
             path = 'tests/data/' + file
             with self.subTest(path):
                 got = Tree.from_file(path)
-                res, diffa, diffb = got.equals(expected)
+                res, _, _ = got.equals(expected)
 
                 self.assertTrue(
                     res,
