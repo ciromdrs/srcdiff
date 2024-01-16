@@ -134,6 +134,40 @@ class TestTree(unittest.TestCase):
                     res,
                     f'Expected:\n{expected}\ngot:\n{got}\n')
 
+    def test_from_dir(self):
+        """Test if it builds a Tree from a directory."""
+        # Directories and their Tree representation to use in tests.
+        data = [
+            ['dirs/ab', Tree('Directory', value='tests/data/dirs/ab', children=[
+                Tree('File', value='tests/data/dirs/ab/a.py', children=[
+                    Tree('Module'),
+                ]),
+                Tree('File', value='tests/data/dirs/ab/b.py', children=[
+                    Tree('Module'),
+                ]),
+            ])],
+            ['dirs/with_subdir', Tree('Directory', value='tests/data/dirs/with_subdir', children=[
+                Tree('File', value='tests/data/dirs/with_subdir/at_parent.py', children=[
+                    Tree('Module'),
+                ]),
+                Tree('Directory', value='tests/data/dirs/with_subdir/subdir', children=[
+                    Tree('File', value='tests/data/dirs/with_subdir/subdir/at_subdir.py', children=[
+                        Tree('Module'),
+                    ]),
+                ]),
+            ])
+            ],
+        ]
+        for directory, expected in data:
+            path = 'tests/data/' + directory
+            with self.subTest(path):
+                got = Tree.from_dir(path)
+                res, diffa, diffb = got.equals(expected)
+
+                msg = f'\nExpected:\n{expected}\ngot:\n{got}\n' + \
+                    f'First differing elements:\n- {diffa}\n+ {diffb}'
+                self.assertTrue(res, msg)
+
     def test_equals(self):
         """Test the equals method."""
         # Subtest label, treea, treeb, expected_res, diffa, diffb

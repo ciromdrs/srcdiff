@@ -1,4 +1,5 @@
 import ast
+import os
 
 
 class Tree:
@@ -59,13 +60,34 @@ class Tree:
         return root
 
     @classmethod
-    def from_dir(cls, path: str) -> 'Tree':
-        """TODO: Build a `Tree` node from a directory.
+    def from_dir(cls, path: str, ignore: list[str] = ['__pycache__'], recursive=True) -> 'Tree':
+        """Build a `Tree` node from a directory.
 
         `path` is the path to the directory.
+        `ignore` is a list of files and directories to ignore.
+        `recursive` indicates if it must explore subdirectories recursively.
         Returns the `Tree` object.
         """
-        raise Exception('Not implemented yet')
+        children = []
+        # List of files and directories
+        files_dirs = [path + '/' + fd for fd in os.listdir(path)]
+        files = [f for f in files_dirs if os.path.isfile(f)]
+        for f in files:
+            if f not in ignore:
+                node = cls.from_file(f)
+                children += [node]
+        dirs = [d for d in files_dirs if os.path.isdir(d)]
+        for d in dirs:
+            if d not in ignore:
+                # By default, create a node non-recursively.
+                # This avoids node from being None.
+                node: Tree = Tree('Directory', path)
+                if recursive:
+                    # If recursive is True, recreate it.
+                    node = cls.from_dir(d)
+                children += [node]
+        root = Tree('Directory', path, children)
+        return root
 
     def __repr__(self, recursive=True, current_indent=0, indent_size=4) -> str:
         """Pretty-prints a `Tree` to `str`.
