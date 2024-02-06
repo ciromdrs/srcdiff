@@ -158,7 +158,7 @@ class Diff2:
 
 # FUNCTIONS
 
-def diff2(a: str, b: str) -> Diff2:
+def diff2(a: str, b: str) -> tuple[int, list[str], list[str]]:
     '''Performs a diff between strings `a`and `b`.'''
-    result = Diff2(a, b)
+    result = Diff2(a, b).run()
     return result
