@@ -4,25 +4,33 @@ import os
 
 class Tree:
     """Tree structure representing representing Python projects, including abstract syntax trees of scripts and directory nodes.
-
-    `type_` is the type of the node, either 'Directory' or the name of an `ast.AST` subclass.
-    `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
-    `children` is a list of child `Tree` nodes.
     """
-    type_: str = ''
-    value: str | int | bool | float | None = None
-    children: list['Tree'] = []
-
     def __init__(self,
                  type_,
                  value: str | int | bool | float | None = None,
-                 children: list['Tree'] = []):
+                 children: list['Tree'] = [],
+                 auto_set_index: bool = False,
+                 last_index: int = 0):
+        """Creates a Tree object.
+        `type_` is the type of the node, either 'Directory' or the name of an `ast.AST` subclass.
+        `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
+        `children` is a list of child `Tree` nodes.
+        `must_set_index` is a boolean indicating whether it should recursively compute the index of the entire Tree (via the set_index method) or assign simply `last_index+1` to this node's `index`.
+        `last_index` is the last index assigned in the construction of the tree. It is used by the tree-diff algorithm.
+        """
         self.type = type_
         self.value = value
         self.children = children
+        # To avoid unnecessary computing
+        if auto_set_index:
+            # Either computes the index of the entire Tree
+            self.set_index(last_index)
+        else:
+            # Or simply assigns the value supplied
+            self._index = last_index + 1
 
     @classmethod
-    def from_AST(cls, astree: ast.AST) -> 'Tree':
+    def from_AST(cls, astree: ast.AST, last_index: int = 0) -> 'Tree':
         """Recursively builds a `Tree` node from an abstract syntax tree.
         `astree` is the abstract syntax tree for a given Python script.
         Returns the `Tree` object.
@@ -39,13 +47,14 @@ class Tree:
         # The children list is built recursively
         children = []
         for subastree in ast.iter_child_nodes(astree):
-            child = cls.from_AST(subastree)
+            child = cls.from_AST(subastree, last_index)
             children += [child]
-        node = cls(type_, value, children)
+            last_index = child.get_index() + 1
+        node = cls(type_, value, children, last_index=last_index)
         return node
 
     @classmethod
-    def from_file(cls, filename: str) -> 'Tree':
+    def from_file(cls, filename: str, last_index: int = 0) -> 'Tree':
         """Builds a `Tree` node from a Python script file.
 
         `filename` is the path to the Python script file.
@@ -55,15 +64,17 @@ class Tree:
         contents = f.read()
         f.close()
         astree = ast.parse(contents)
-        subtree = cls.from_AST(astree)
-        root = cls('File', filename, [subtree])
+        subtree = cls.from_AST(astree, last_index)
+        last_index = subtree.get_index() + 1
+        root = cls('File', filename, [subtree], last_index=last_index)
         return root
 
     @classmethod
-    def from_dir(cls, path: str, ignore: list[str] = ['__pycache__'], recursive=True) -> 'Tree':
+    def from_dir(cls, path: str, last_index: int = 0, ignore: list[str] = ['__pycache__'], recursive=True) -> 'Tree':
         """Build a `Tree` node from a directory.
 
         `path` is the path to the directory.
+        `last_index` is used to compute the index.
         `ignore` is a list of files and directories to ignore.
         `recursive` indicates if it must explore subdirectories recursively.
         Returns the `Tree` object.
@@ -72,11 +83,14 @@ class Tree:
         # List of files and directories
         files_dirs = [path + '/' + fd for fd in os.listdir(path)]
         files = [f for f in files_dirs if os.path.isfile(f)]
+        # Parse files first
         for f in files:
             if f not in ignore:
-                node = cls.from_file(f)
+                node = cls.from_file(f, last_index)
                 children += [node]
+                last_index = node.get_index() + 1
         dirs = [d for d in files_dirs if os.path.isdir(d)]
+        # Parse directories
         for d in dirs:
             if d not in ignore:
                 # By default, create a node non-recursively.
@@ -84,9 +98,10 @@ class Tree:
                 node: Tree = Tree('Directory', path)
                 if recursive:
                     # If recursive is True, recreate it.
-                    node = cls.from_dir(d)
+                    node = cls.from_dir(d, last_index)
+                    last_index = node.get_index() + 1
                 children += [node]
-        root = Tree('Directory', path, children)
+        root = Tree('Directory', path, children, last_index=last_index)
         return root
 
     def __repr__(self, recursive=True, current_indent=0, indent_size=4) -> str:
@@ -108,6 +123,8 @@ class Tree:
             if type(self.value) == str:
                 aux = repr(self.value)  # Add quotes to strings
             value = f", value={aux}"
+        # Index
+        index = f", last_index={self.get_index()}"
         # Children
         children = ''
         if self.children:
@@ -123,7 +140,7 @@ class Tree:
                 children += '...'
             children += left_padding + ']'
         # Join everything
-        out = left_padding + f'Tree({type_}{value}{children})'
+        out = left_padding + f'Tree({type_}{value}{index}{children})'
         return out
 
     def equals(self, another: 'Tree') -> tuple[bool, str | None, str | None]:
@@ -152,3 +169,21 @@ class Tree:
                 return False, diff_self_complete, diff_another_complete
         # If all checks passed, they are equal
         return True, None, None
+
+    def set_index(self, last_index):
+        """Recursively sets the indexes of this node and all its children based on the `last_index`.
+        """
+        # Assigns indices to children first
+        updated_index = last_index
+        for c in self.children:
+            c.set_index(updated_index)
+            updated_index = c.get_index()
+        # Assigns the index to self
+        self._index = updated_index + 1
+
+    def get_index(self) -> int:
+        """Returns the index of this node.
+        If it has not yet been assigned via `set_index`, throws an assertion error.
+        """
+        assert self._index > 0, 'self._index not assigned yet'
+        return self._index
