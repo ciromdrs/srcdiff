@@ -237,7 +237,7 @@ class TestTree(unittest.TestCase):
         c = tree.children[0].children[1]
         e = tree.children[1]
 
-        self.assertEqual([f, c, e], tree.keyroots())
+        self.assertEqual([c, e, f], tree.keyroots())
 
     def test_leftmost_leaf(self):
         tree = Tree('f', children=[

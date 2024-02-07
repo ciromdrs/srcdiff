@@ -202,12 +202,12 @@ class Tree:
         `is_keyroot` indicates whether this node is a keyroot.
         """
         keyroots: list['Tree'] = []
-        if is_keyroot:
-            keyroots += [self]
         if len(self.children) > 0:
             keyroots += self.children[0]._keyroots(is_keyroot=False)
             for c in self.children[1:]:
                 keyroots += c._keyroots(is_keyroot=True)
+        if is_keyroot:
+            keyroots += [self]
         return keyroots
 
     def leftmost_leaf(self) -> 'Tree':
