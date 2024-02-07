@@ -209,3 +209,9 @@ class Tree:
             for c in self.children[1:]:
                 keyroots += c._keyroots(is_keyroot=True)
         return keyroots
+
+    def leftmost_leaf(self) -> 'Tree':
+        """Returns the leftmost leaf of this node."""
+        if len(self.children) == 0:
+            return self
+        return self.children[0].leftmost_leaf()
