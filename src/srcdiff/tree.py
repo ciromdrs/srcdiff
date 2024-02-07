@@ -5,6 +5,7 @@ import os
 class Tree:
     """Tree structure representing representing Python projects, including abstract syntax trees of scripts and directory nodes.
     """
+
     def __init__(self,
                  type_: str,
                  value: str | int | bool | float | None = None,

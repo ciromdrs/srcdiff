@@ -15,7 +15,8 @@ class TestTree(unittest.TestCase):
         value = 'the_value'
         children = []
         last_index = 10
-        tree = Tree(type_, value, children, last_index=last_index, auto_set_index=True)
+        tree = Tree(type_, value, children,
+                    last_index=last_index, auto_set_index=True)
 
         self.assertEqual(tree.type, type_)
         self.assertEqual(tree.value, value)
@@ -198,16 +199,15 @@ class TestTree(unittest.TestCase):
     def test_set_index(self):
         tree = Tree('ClassDef', value='Dumber', children=[
             Tree('Name', value='Dummy', children=[
-                Tree('Load'),
-            ]),
+                    Tree('Load'),
+                    ]),
             Tree('FunctionDef', value='do_nothing', children=[
                 Tree('arguments', children=[
                     Tree('arg', value='self'),
                 ]),
                 Tree('Pass'),
             ]),
-        ],
-        auto_set_index=True)
+        ], auto_set_index=True)
         name = tree.children[0]
         load = name.children[0]
         function_def = tree.children[1]
