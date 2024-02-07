@@ -222,3 +222,19 @@ class TestTree(unittest.TestCase):
         self.assertEqual(5, pass_.get_index())
         self.assertEqual(6, function_def.get_index())
         self.assertEqual(7, tree.get_index())
+
+    def test_keyroots(self):
+        tree = Tree('f', children=[
+            Tree('d', children=[
+                Tree('a'),
+                Tree('c', children=[
+                    Tree('b'),
+                ]),
+            ]),
+            Tree('e'),
+        ])
+        f = tree
+        c = tree.children[0].children[1]
+        e = tree.children[1]
+
+        self.assertEqual([f, c, e], tree.keyroots())

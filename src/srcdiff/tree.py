@@ -187,3 +187,24 @@ class Tree:
         """
         assert self._index > 0, 'self._index not assigned yet'
         return self._index
+
+    def keyroots(self) -> list['Tree']:
+        """Returns the Tree's keyroots, used by the diff algorithm."""
+        return self._keyroots(is_keyroot=True)
+
+    def _keyroots(self, is_keyroot: bool) -> list['Tree']:
+        """Recursively finds the keyroots of the Tree.
+        Basically, we know a node is a keyroot if it is not the first child of a node.
+        For the formal definition, consult:
+        Zhang, K., & Shasha, D. (1989). Simple Fast Algorithms for the Editing Distance Between Trees and Related Problems. SIAM J. Comput., 18, 1245-1262.
+
+        `is_keyroot` indicates whether this node is a keyroot.
+        """
+        keyroots: list['Tree'] = []
+        if is_keyroot:
+            keyroots += [self]
+        if len(self.children) > 0:
+            keyroots += self.children[0]._keyroots(is_keyroot=False)
+            for c in self.children[1:]:
+                keyroots += c._keyroots(is_keyroot=True)
+        return keyroots
