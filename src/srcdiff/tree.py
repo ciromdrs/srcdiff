@@ -6,7 +6,7 @@ class Tree:
     """Tree structure representing representing Python projects, including abstract syntax trees of scripts and directory nodes.
     """
     def __init__(self,
-                 type_,
+                 type_: str,
                  value: str | int | bool | float | None = None,
                  children: list['Tree'] = [],
                  auto_set_index: bool = False,
@@ -18,9 +18,9 @@ class Tree:
         `must_set_index` is a boolean indicating whether it should recursively compute the index of the entire Tree (via the set_index method) or assign simply `last_index+1` to this node's `index`.
         `last_index` is the last index assigned in the construction of the tree. It is used by the tree-diff algorithm.
         """
-        self.type = type_
-        self.value = value
-        self.children = children
+        self.type: str = type_
+        self.value: str | int | bool | float | None = value
+        self.children: list['Tree'] = children
         # To avoid unnecessary computing
         if auto_set_index:
             # Either computes the index of the entire Tree
@@ -179,7 +179,7 @@ class Tree:
             c.set_index(updated_index)
             updated_index = c.get_index()
         # Assigns the index to self
-        self._index = updated_index + 1
+        self._index: int = updated_index + 1
 
     def get_index(self) -> int:
         """Returns the index of this node.
