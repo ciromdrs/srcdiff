@@ -9,7 +9,7 @@ class Tree:
     - `type` is the type of the node, either 'Directory', 'File' or the name of an `ast.AST` subclass.
     - `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
     - `children` is a list of child `Tree` nodes.
-    - `parent` is the parent `Tree` node. It is `None` if the node is the root of the tree.
+    - `parent` is the parent `Tree` node. It is `None` if the node is the root of the `Tree`.
     - `index_of` is a dictionary that maps each node to its index.
     - `_node_at` is a dictionary that maps each index to its node. It is used to make the `Tree` indexable.
     """
