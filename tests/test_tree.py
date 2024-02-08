@@ -8,6 +8,18 @@ from src.srcdiff.tree import Tree
 
 class TestTree(unittest.TestCase):
     """Test case for the Tree class."""
+    def setUp(self):
+        super().setUp()
+        
+        self.example_tree = Tree('f', children=[
+            Tree('d', children=[
+                Tree('a'),
+                Tree('c', children=[
+                    Tree('b'),
+                ]),
+            ]),
+            Tree('e'),
+        ])
 
     def test_init(self):
         """Test if a Tree is instantiated correctly using the constructor."""
@@ -203,15 +215,7 @@ class TestTree(unittest.TestCase):
                 self.assertEqual(exp_diffb, got_diffb)
 
     def test_keyroots(self):
-        tree = Tree('f', children=[
-            Tree('d', children=[
-                Tree('a'),
-                Tree('c', children=[
-                    Tree('b'),
-                ]),
-            ]),
-            Tree('e'),
-        ])
+        tree = self.example_tree
         f = tree
         c = tree.children[0].children[1]
         e = tree.children[1]
@@ -219,16 +223,7 @@ class TestTree(unittest.TestCase):
         self.assertEqual([c, e, f], tree.keyroots())
 
     def test_leftmost_leaf(self):
-        tree = Tree('f', children=[
-            Tree('d', children=[
-                Tree('a'),
-                Tree('c', children=[
-                    Tree('b'),
-                ]),
-            ]),
-            Tree('e'),
-        ])
-        f = tree
+        f = self.example_tree
         d = f.children[0]
         a = d.children[0]
         c = d.children[1]
@@ -243,16 +238,7 @@ class TestTree(unittest.TestCase):
         self.assertEqual(e, e.leftmost_leaf())
 
     def test_size(self):
-        tree = Tree('f', children=[
-            Tree('d', children=[
-                Tree('a'),
-                Tree('c', children=[
-                    Tree('b'),
-                ]),
-            ]),
-            Tree('e'),
-        ])
-        f = tree
+        f = self.example_tree
         d = f.children[0]
         a = d.children[0]
         c = d.children[1]
@@ -274,20 +260,11 @@ class TestTree(unittest.TestCase):
 
     def test_as_list(self):
         """Test the as_list method."""
-        tree = Tree('f', children=[
-            Tree('d', children=[
-                Tree('a'),
-                Tree('c', children=[
-                    Tree('b'),
-                ]),
-            ]),
-            Tree('e'),
-        ])
-        f = tree
+        f = self.example_tree
         d = f.children[0]
         a = d.children[0]
         c = d.children[1]
         b = c.children[0]
         e = f.children[1]
 
-        self.assertEqual([a, b, c, d, e, f], tree.as_list())
+        self.assertEqual([a, b, c, d, e, f], self.example_tree.as_list())
