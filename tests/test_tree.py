@@ -14,14 +14,11 @@ class TestTree(unittest.TestCase):
         type_ = 'TheType'
         value = 'the_value'
         children = []
-        last_index = 10
-        tree = Tree(type_, value, children,
-                    last_index=last_index, auto_set_index=True)
+        tree = Tree(type_, value, children)
 
         self.assertEqual(tree.type, type_)
         self.assertEqual(tree.value, value)
         self.assertEqual(tree.children, children)
-        self.assertEqual(tree.get_index(), last_index + 1)
 
     def test_init_with_missing_parameters(self):
         """Test if a Tree is instantiated correctly with missing parameters."""
@@ -31,7 +28,7 @@ class TestTree(unittest.TestCase):
         self.assertEqual(tree.type, type_)
         self.assertEqual(tree.value, None)
         self.assertEqual(tree.children, [])
-        self.assertEqual(tree.get_index(), 1)
+        self.assertEqual(tree.as_list(), [tree])
 
     def test_parent(self):
         """Test if the parent attribute is set correctly."""
@@ -205,33 +202,6 @@ class TestTree(unittest.TestCase):
                 self.assertEqual(exp_diffa, got_diffa)
                 self.assertEqual(exp_diffb, got_diffb)
 
-    def test_set_index(self):
-        tree = Tree('ClassDef', value='Dumber', children=[
-            Tree('Name', value='Dummy', children=[
-                    Tree('Load'),
-                    ]),
-            Tree('FunctionDef', value='do_nothing', children=[
-                Tree('arguments', children=[
-                    Tree('arg', value='self'),
-                ]),
-                Tree('Pass'),
-            ]),
-        ], auto_set_index=True)
-        name = tree.children[0]
-        load = name.children[0]
-        function_def = tree.children[1]
-        arguments = function_def.children[0]
-        arg = arguments.children[0]
-        pass_ = function_def.children[1]
-
-        self.assertEqual(1, load.get_index())
-        self.assertEqual(2, name.get_index())
-        self.assertEqual(3, arg.get_index())
-        self.assertEqual(4, arguments.get_index())
-        self.assertEqual(5, pass_.get_index())
-        self.assertEqual(6, function_def.get_index())
-        self.assertEqual(7, tree.get_index())
-
     def test_keyroots(self):
         tree = Tree('f', children=[
             Tree('d', children=[
@@ -301,3 +271,23 @@ class TestTree(unittest.TestCase):
         self.assertEqual(2, len(c))
         self.assertEqual(1, len(b))
         self.assertEqual(1, len(e))
+
+    def test_as_list(self):
+        """Test the as_list method."""
+        tree = Tree('f', children=[
+            Tree('d', children=[
+                Tree('a'),
+                Tree('c', children=[
+                    Tree('b'),
+                ]),
+            ]),
+            Tree('e'),
+        ])
+        f = tree
+        d = f.children[0]
+        a = d.children[0]
+        c = d.children[1]
+        b = c.children[0]
+        e = f.children[1]
+
+        self.assertEqual([a, b, c, d, e, f], tree.as_list())
