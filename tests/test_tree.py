@@ -269,3 +269,33 @@ class TestTree(unittest.TestCase):
         self.assertEqual(b, c.leftmost_leaf())
         self.assertEqual(b, b.leftmost_leaf())
         self.assertEqual(e, e.leftmost_leaf())
+
+    def test_size(self):
+        tree = Tree('f', children=[
+            Tree('d', children=[
+                Tree('a'),
+                Tree('c', children=[
+                    Tree('b'),
+                ]),
+            ]),
+            Tree('e'),
+        ])
+        f = tree
+        d = f.children[0]
+        a = d.children[0]
+        c = d.children[1]
+        b = c.children[0]
+        e = f.children[1]
+
+        self.assertEqual(6, f.size())
+        self.assertEqual(4, d.size())
+        self.assertEqual(1, a.size())
+        self.assertEqual(2, c.size())
+        self.assertEqual(1, b.size())
+        self.assertEqual(1, e.size())
+        self.assertEqual(6, len(f))
+        self.assertEqual(4, len(d))
+        self.assertEqual(1, len(a))
+        self.assertEqual(2, len(c))
+        self.assertEqual(1, len(b))
+        self.assertEqual(1, len(e))

@@ -37,6 +37,10 @@ class Tree:
             # Or simply assigns the value supplied
             self._index = last_index + 1
 
+    def __len__(self):
+        """Returns the size of the Tree."""
+        return self.size()
+
     @classmethod
     def from_AST(cls, astree: ast.AST, last_index: int = 0) -> 'Tree':
         """Recursively builds a `Tree` node from an abstract syntax tree.
@@ -222,3 +226,7 @@ class Tree:
         if len(self.children) == 0:
             return self
         return self.children[0].leftmost_leaf()
+
+    def size(self) -> int:
+        """Returns the size of the Tree."""
+        return 1 + sum([c.size() for c in self.children])
