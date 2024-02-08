@@ -22,8 +22,11 @@ class Tree:
         """
         self.type: str = type_
         self.value: str | int | bool | float | None = value
+        # Set this node's `parent` to `None`. It will be reassigned by the `parent` if there is one.
         self.parent: 'Tree | None' = None
+        # Set `children`
         self.children: list['Tree'] = children
+        # Set the `children`'s `parent` to this node.
         for c in self.children:
             c.parent = self
         # Set the `index_of` dictionary
