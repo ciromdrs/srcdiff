@@ -4,24 +4,31 @@ import os
 
 class Tree:
     """Tree structure representing representing Python projects, including abstract syntax trees of scripts and directory nodes.
+
+    Attributes:
+    - `type` is the type of the node, either 'Directory', 'File' or the name of an `ast.AST` subclass.
+    - `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
+    - `children` is a list of child `Tree` nodes.
+    - `parent` is the parent `Tree` node. It is `None` if the node is the root of the tree.
+    - `index` is the index of a node in the Tree. It is used by the tree-diff algorithm.
     """
 
     def __init__(self,
                  type_: str,
                  value: str | int | bool | float | None = None,
                  children: list['Tree'] = [],
+                 parent: 'Tree | None' = None,
                  auto_set_index: bool = False,
                  last_index: int = 0):
         """Creates a Tree object.
-        `type_` is the type of the node, either 'Directory' or the name of an `ast.AST` subclass.
-        `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
-        `children` is a list of child `Tree` nodes.
+        `type_`, `value`, and `children` correspond to the class' attributes.
         `must_set_index` is a boolean indicating whether it should recursively compute the index of the entire Tree (via the set_index method) or assign simply `last_index+1` to this node's `index`.
-        `last_index` is the last index assigned in the construction of the tree. It is used by the tree-diff algorithm.
+        `last_index` is the last index assigned in the construction of the tree.
         """
         self.type: str = type_
         self.value: str | int | bool | float | None = value
         self.children: list['Tree'] = children
+        self.parent: 'Tree | None' = parent
         # To avoid unnecessary computing
         if auto_set_index:
             # Either computes the index of the entire Tree

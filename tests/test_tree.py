@@ -33,6 +33,13 @@ class TestTree(unittest.TestCase):
         self.assertEqual(tree.children, [])
         self.assertEqual(tree.get_index(), 1)
 
+    def test_parent(self):
+        """Test if the parent attribute is set correctly."""
+        tree = Tree('TheType')
+        child = Tree('TheType', parent=tree)
+
+        self.assertEqual(child.parent, tree)
+
     def test_from_file(self):
         """Test if it builds a Tree from a Python script file."""
         # Python scritps and their Tree representation to use in tests.
