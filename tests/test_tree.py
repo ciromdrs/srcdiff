@@ -40,7 +40,7 @@ class TestTree(unittest.TestCase):
         self.assertEqual(tree.type, type_)
         self.assertEqual(tree.value, None)
         self.assertEqual(tree.children, [])
-        self.assertEqual(tree.as_list(), [tree])
+        self.assertEqual(tree._node_at, {1:tree})
 
     def test_parent(self):
         """Test if the parent attribute is set correctly."""
@@ -258,8 +258,8 @@ class TestTree(unittest.TestCase):
         self.assertEqual(1, len(b))
         self.assertEqual(1, len(e))
 
-    def test_as_list(self):
-        """Test the as_list method."""
+    def test_node_at(self):
+        """Test the _node_at attribute."""
         f = self.example_tree
         d = f.children[0]
         a = d.children[0]
@@ -267,7 +267,8 @@ class TestTree(unittest.TestCase):
         b = c.children[0]
         e = f.children[1]
 
-        self.assertEqual([a, b, c, d, e, f], self.example_tree.as_list())
+        self.assertEqual({1:a, 2:b, 3:c, 4:d, 5:e, 6:f},
+                         self.example_tree._node_at)
 
     def test_index_of(self):
         """Test the index_of attribute."""

@@ -11,6 +11,7 @@ class Tree:
     - `children` is a list of child `Tree` nodes.
     - `parent` is the parent `Tree` node. It is `None` if the node is the root of the tree.
     - `index_of` is a dictionary that maps each node to its index.
+    - `_node_at` is a dictionary that maps each index to its node. It is used to make the `Tree` indexable.
     """
 
     def __init__(self,
@@ -29,10 +30,15 @@ class Tree:
         # Set the `children`'s `parent` to this node.
         for c in self.children:
             c.parent = self
-        # Set the `index_of` dictionary
+        # Compute the `_node_at` attribute
+        temp = self._as_list()
+        self._node_at: dict[int, 'Tree'] = {}
+        for i, v in enumerate(temp):
+            self._node_at[i+1] = v
+        # Compute the `index_of` attribute
         self.index_of: dict['Tree', int] = {}
-        for i, c in enumerate(self.as_list()):
-            self.index_of[c] = i + 1
+        for i, c in self._node_at.items():
+            self.index_of[c] = i
 
     def __len__(self):
         """Returns the size of the Tree."""
@@ -40,7 +46,7 @@ class Tree:
 
     def __getitem__(self, i):
         """Returns the node of index `i`."""
-        return self.as_list()[i-1]
+        return self._node_at[i]
 
     @classmethod
     def from_AST(cls, astree: ast.AST) -> 'Tree':
@@ -207,10 +213,10 @@ class Tree:
         """Returns the size of the Tree."""
         return 1 + sum([c.size() for c in self.children])
 
-    def as_list(self) -> list['Tree']:
+    def _as_list(self) -> list['Tree']:
         """Returns the `Tree` as a list."""
         l = []
         for c in self.children:
-            l += c.as_list()
+            l += c._as_list()
         l += [self]
         return l
