@@ -285,4 +285,23 @@ class TestTree(unittest.TestCase):
         self.assertEqual(4, tree.index_of[d])
         self.assertEqual(5, tree.index_of[e])
         self.assertEqual(6, tree.index_of[f])
+
+    def test_getitem(self):
+        """Test the __getitem__ magic method."""
+        tree = self.example_tree
+        d = tree.children[0]
+        a = d.children[0]
+        c = d.children[1]
+        b = c.children[0]
+
+        self.assertEqual(a, tree[1])
+        self.assertEqual(b, tree[2])
+        self.assertEqual(c, tree[3])
+        self.assertEqual(d, tree[4])
+        self.assertEqual(a, d[1])
+        self.assertEqual(b, d[2])
+        self.assertEqual(c, d[3])
+        self.assertEqual(d, d[4])
+        self.assertEqual(b, c[1])
+
         

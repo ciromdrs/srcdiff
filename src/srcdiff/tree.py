@@ -38,6 +38,10 @@ class Tree:
         """Returns the size of the Tree."""
         return self.size()
 
+    def __getitem__(self, i):
+        """Returns the node of index `i`."""
+        return self.as_list()[i-1]
+
     @classmethod
     def from_AST(cls, astree: ast.AST) -> 'Tree':
         """Recursively builds a `Tree` node from an abstract syntax tree.
