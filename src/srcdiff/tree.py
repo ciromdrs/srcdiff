@@ -17,7 +17,6 @@ class Tree:
                  type_: str,
                  value: str | int | bool | float | None = None,
                  children: list['Tree'] = [],
-                 parent: 'Tree | None' = None,
                  auto_set_index: bool = False,
                  last_index: int = 0):
         """Creates a Tree object.
@@ -27,8 +26,10 @@ class Tree:
         """
         self.type: str = type_
         self.value: str | int | bool | float | None = value
+        self.parent: 'Tree | None' = None
         self.children: list['Tree'] = children
-        self.parent: 'Tree | None' = parent
+        for c in self.children:
+            c.parent = self
         # To avoid unnecessary computing
         if auto_set_index:
             # Either computes the index of the entire Tree

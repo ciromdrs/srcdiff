@@ -35,8 +35,10 @@ class TestTree(unittest.TestCase):
 
     def test_parent(self):
         """Test if the parent attribute is set correctly."""
-        tree = Tree('TheType')
-        child = Tree('TheType', parent=tree)
+        tree = Tree('TheType', children=[
+            Tree('TheType')
+        ])
+        child = tree.children[0]
 
         self.assertEqual(child.parent, tree)
 
