@@ -268,3 +268,21 @@ class TestTree(unittest.TestCase):
         e = f.children[1]
 
         self.assertEqual([a, b, c, d, e, f], self.example_tree.as_list())
+
+    def test_index_of(self):
+        """Test the index_of attribute."""
+        tree = self.example_tree
+        f = tree
+        d = f.children[0]
+        a = d.children[0]
+        c = d.children[1]
+        b = c.children[0]
+        e = f.children[1]
+
+        self.assertEqual(1, tree.index_of[a])
+        self.assertEqual(2, tree.index_of[b])
+        self.assertEqual(3, tree.index_of[c])
+        self.assertEqual(4, tree.index_of[d])
+        self.assertEqual(5, tree.index_of[e])
+        self.assertEqual(6, tree.index_of[f])
+        

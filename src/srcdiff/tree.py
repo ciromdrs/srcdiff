@@ -10,6 +10,7 @@ class Tree:
     - `value` provides additional useful information about a node. Ex.: for a node of type `Constant`, the `value` could be `3.14`.
     - `children` is a list of child `Tree` nodes.
     - `parent` is the parent `Tree` node. It is `None` if the node is the root of the tree.
+    - `index_of` is a dictionary that maps each node to its index.
     """
 
     def __init__(self,
@@ -25,6 +26,10 @@ class Tree:
         self.children: list['Tree'] = children
         for c in self.children:
             c.parent = self
+        # Set the `index_of` dictionary
+        self.index_of: dict['Tree', int] = {}
+        for i, c in enumerate(self.as_list()):
+            self.index_of[c] = i + 1
 
     def __len__(self):
         """Returns the size of the Tree."""
