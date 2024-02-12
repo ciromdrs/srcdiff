@@ -44,7 +44,7 @@ class Tree:
         """Returns the size of the Tree."""
         return self.size()
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> 'Tree':
         """Returns the node of index `i`."""
         return self._node_at[i]
 
