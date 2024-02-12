@@ -32,8 +32,8 @@ class TreeDiff2:
         return self.table[ikra][ikrb]
     
     def _create_temp_edit_table(self, ikra: int, ikrb: int) -> list[list[int]]:
-        """Creates a temporary table to compute the edit distance between the subtrees rooted at `ikra` and `ikrb`."""
-        # Create a temporary (n+1) x (m+1) tree edit distance table, where n and m are the number elements in the subtree rooted at keyroot a and keyroot b, respectively.
+        """Creates a temporary (n+1) x (m+1) tree edit distance table to compute the edit distance between the subtrees rooted at `ikra` and `ikrb`, where n and m are the number elements in the subtree rooted at keyroot a and keyroot b, respectively, and the +1 is for representing the empty trees.
+        """
         n = len(self.a[ikra]) + 1
         m = len(self.b[ikrb]) + 1
         temp = [[i for i in range(m)]]
