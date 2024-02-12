@@ -220,3 +220,18 @@ class Tree:
             l += c._as_list()
         l += [self]
         return l
+
+    def forest(self, first: int, last: int) -> list['Tree']:
+        """Returns the forest (subtrees of this one) containing vertices from index `first` to `last`."""
+        forest = []
+        leftmost = first
+        while leftmost <= last:
+            current: Tree = self[leftmost]
+            parent: Tree | None = current.parent
+            while parent is not None and self.index_of[parent] <= last:
+                current = parent
+                parent = parent.parent
+            forest += [current]
+            leftmost = self.index_of[current] + 1
+        return forest
+    

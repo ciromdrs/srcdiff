@@ -305,4 +305,26 @@ class TestTree(unittest.TestCase):
         self.assertEqual(d, d[4])
         self.assertEqual(b, c[1])
 
-        
+    def test_forest(self):
+        """Test the _forest method."""
+        tree = self.example_tree
+        f = tree
+        d = f.children[0]
+        a = d.children[0]
+        c = d.children[1]
+        b = c.children[0]
+        e = f.children[1]
+
+        # Expected forest, first index, last index
+        data = [
+            [[a], 1, 1],
+            [[a, b], 1, 2],
+            [[a, c], 1, 3],
+            [[d], 1, 4],
+            [[d, e], 1, 5],
+            [[f], 1, 6],
+        ]
+        for expected, first, last in data:
+            subtest_label = f'First: {first}, last: {last}'
+            with self.subTest(subtest_label):
+                self.assertEqual(expected, tree.forest(first, last))
