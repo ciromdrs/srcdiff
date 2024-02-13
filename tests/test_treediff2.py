@@ -20,8 +20,8 @@ class TestTreeDiff2(unittest.TestCase):
         ])
 
         self.example_tree_b = Tree('f', children=[
-            Tree('c', children=[
-                Tree('d', children=[
+            Tree('d', children=[
+                Tree('c', children=[
                     Tree('a'),
                     Tree('b'),
                 ]),
