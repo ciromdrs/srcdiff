@@ -155,10 +155,11 @@ class Tree:
         out = left_padding + f'Tree({type_}{value}{children})'
         return out
 
-    def equals(self, another: 'Tree') -> tuple[bool, str | None, str | None]:
+    def equals(self, another: 'Tree', compare_children=True) -> tuple[bool, str | None, str | None]:
         """Compares this Tree to another.
 
         `another` is the other Tree object to compare to.
+        `compare_children` is a flag indicating whether it should also compare the children, recursively.
         Returns a boolean indicating if the trees are equal and the paths to the pair of differing nodes if the trees are different.
         """
         # These variables indicate the path to the first differing elements.
@@ -171,14 +172,15 @@ class Tree:
                 self.value != another.value or \
                 len(self.children) != len(another.children):
             return False, diff_self, diff_another
-        # Then, compare each children, in the same order
-        for i in range(len(self.children)):
-            res, diff_child_self, diff_child_another = self.children[i].equals(
-                another.children[i])
-            if not res:
-                diff_self_complete = f'{diff_self}/{i}/{diff_child_self}'
-                diff_another_complete = f'{diff_another}/{i}/{diff_child_another}'
-                return False, diff_self_complete, diff_another_complete
+        if compare_children:
+            # Then, compare each children, in the same order
+            for i in range(len(self.children)):
+                res, diff_child_self, diff_child_another = self.children[i].equals(
+                    another.children[i])
+                if not res:
+                    diff_self_complete = f'{diff_self}/{i}/{diff_child_self}'
+                    diff_another_complete = f'{diff_another}/{i}/{diff_child_another}'
+                    return False, diff_self_complete, diff_another_complete
         # If all checks passed, they are equal
         return True, None, None
 

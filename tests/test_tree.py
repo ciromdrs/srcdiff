@@ -195,20 +195,26 @@ class TestTree(unittest.TestCase):
         # Subtest label, treea, treeb, expected_res, diffa, diffb
         data = [
             ['Equal type, value and children.',
-                Tree('Module'), Tree('Module'), True, None, None],
+                Tree('Module'), Tree('Module'), True, None, None, True],
             ['Different value.',
-                Tree('Name', 'a'), Tree('Name', 'b'), False, 'Name:a', 'Name:b'],
+                Tree('Name', 'a'), Tree('Name', 'b'), False, 'Name:a', 'Name:b', True],
             ['Different children.',
                 Tree('Name', 'a', [Tree('Expr')]),
                 Tree('Name', 'a', [Tree('Constant')]),
-                False, 'Name:a/0/Expr', 'Name:a/0/Constant'],
+                False, 'Name:a/0/Expr', 'Name:a/0/Constant', True],
             ['Different type.',
-                Tree('Module'), Tree('Arg'), False, 'Module', 'Arg'],
+                Tree('Module'), Tree('Arg'), False, 'Module', 'Arg', True],
+            ['Ignore different children.',
+                Tree('Name', 'a', [Tree('Expr')]),
+                Tree('Name', 'a', [Tree('Constant')]),
+                True, None, None, False],
         ]
 
-        for subtest_label, treea, treeb, expected, exp_diffa, exp_diffb in data:
+        for subtest_label, treea, treeb, expected, exp_diffa, exp_diffb, \
+                compare_children in data:
             with self.subTest(subtest_label):
-                got, got_diffa, got_diffb = treea.equals(treeb)
+                got, got_diffa, got_diffb = treea.equals(
+                    treeb, compare_children)
 
                 self.assertEqual(expected, got)
                 self.assertEqual(exp_diffa, got_diffa)
