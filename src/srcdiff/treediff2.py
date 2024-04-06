@@ -53,7 +53,7 @@ class TreeDiff2:
                 global_i = self.a.index_of[kra[local_i]]
                 global_j = self.b.index_of[krb[local_j]]
                 # Check if it is a tree or a forest comparison
-                if self.is_tree_comparison(ilkra, ikra, ilkrb, ikrb):
+                if self._is_tree_comparison(ilkra, ikra, ilkrb, ikrb):
                     # Check if the nodes are equal to get the edit cost
                     equal, _, _ = kra[local_i].equals(
                         krb[local_j], compare_children=False)
@@ -77,7 +77,7 @@ class TreeDiff2:
                     )
         return temp
 
-    def is_tree_comparison(self, ia0: int, ia1: int, ib0: int, ib1: int) -> bool:
+    def _is_tree_comparison(self, ia0: int, ia1: int, ib0: int, ib1: int) -> bool:
         a_is_tree = len(self.a.forest(ia0, ia1)) == 1
         b_is_tree = len(self.b.forest(ib0, ib1)) == 1
         return a_is_tree and b_is_tree

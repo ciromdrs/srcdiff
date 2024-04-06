@@ -156,5 +156,5 @@ class TestTreeDiff2(unittest.TestCase):
         ]
         for desc, ia0, ia1, ib0, ib1, expected in test_data:
             with self.subTest(f'{desc} (a[{ia0}..{ia1}], b[{ib0}..{ib1}]. {expected})'):
-                res = td.is_tree_comparison(ia0, ia1, ib0, ib1)
+                res = td._is_tree_comparison(ia0, ia1, ib0, ib1)
                 self.assertEqual(res, expected)
