@@ -138,6 +138,11 @@ class TestTree(unittest.TestCase):
                         Tree('FunctionDef', value='do_nothing', children=[
                             Tree('arguments', children=[
                                 Tree('arg', value='self'),
+                                Tree('arg', value='data', children=[
+                                    Tree('Name', value='int', children=[
+                                        Tree('Load'),
+                                    ]),
+                                ]),
                             ]),
                             Tree('Pass'),
                         ]),
@@ -150,11 +155,11 @@ class TestTree(unittest.TestCase):
             path = 'tests/data/scripts/' + file
             with self.subTest(path):
                 got = Tree.from_file(path)
-                res, _, _ = got.equals(expected)
+                res, diff_a, diff_b = got.equals(expected)
 
                 self.assertTrue(
                     res,
-                    f'Expected:\n{expected}\ngot:\n{got}\n')
+                    f'\nExpected:\n{expected}\nGot:\n{got}\nDiff:\n- {diff_a}\n+ {diff_b}')
 
     def test_from_dir(self):
         """Test if it builds a Tree from a directory."""

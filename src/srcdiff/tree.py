@@ -169,10 +169,14 @@ class Tree:
             (f':{another.value}' if another.value else '')
         # First, compare the type, value and number of children
         if self.type != another.type or \
-                self.value != another.value or \
-                len(self.children) != len(another.children):
+                self.value != another.value:
             return False, diff_self, diff_another
         if compare_children:
+            # Compare the number of children
+            if len(self.children) != len(another.children):
+                diff_self += f'#children={len(self.children)}'
+                diff_another += f'#children={len(another.children)}'
+                return False, diff_self, diff_another
             # Then, compare each children, in the same order
             for i in range(len(self.children)):
                 res, diff_child_self, diff_child_another = self.children[i].equals(
