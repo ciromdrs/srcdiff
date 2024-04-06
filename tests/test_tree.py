@@ -57,40 +57,35 @@ class TestTree(unittest.TestCase):
         data = [
             ['blank.py', Tree('File', value='tests/data/scripts/blank.py', children=[
                 Tree('Module'),
-            ])
-            ],
+            ])],
             ['str.py', Tree('File', value='tests/data/scripts/str.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value='hello'),
                     ]),
                 ]),
-            ])
-            ],
+            ])],
             ['int.py', Tree('File', value='tests/data/scripts/int.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=123),
                     ]),
                 ]),
-            ])
-            ],
+            ])],
             ['bool.py', Tree('File', value='tests/data/scripts/bool.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=False),
                     ]),
                 ]),
-            ])
-            ],
+            ])],
             ['float.py', Tree('File', value='tests/data/scripts/float.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
                         Tree('Constant', value=3.14),
                     ]),
                 ]),
-            ])
-            ],
+            ])],
             ['none.py', Tree('File', value='tests/data/scripts/none.py', children=[
                 Tree('Module', children=[
                     Tree('Expr', children=[
@@ -146,8 +141,7 @@ class TestTree(unittest.TestCase):
                         ]),
                     ]),
                 ]),
-            ])
-            ],
+            ])],
             ['class.py', Tree('File', value='tests/data/scripts/class.py', children=[
                 Tree('Module', children=[
                     Tree('ClassDef', value='Dummy', children=[
