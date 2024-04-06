@@ -1,7 +1,7 @@
 '''Perform diffs on Trees.'''
 
 
-from src.srcdiff import EMPTY
+from src.srcdiff import EMPTY_SPACE
 from src.srcdiff.tree import Tree
 
 

@@ -1,7 +1,7 @@
 '''Perform diffs of 2 source-code files.'''
 
 
-from src.srcdiff import EMPTY
+from src.srcdiff import EMPTY_SPACE
 
 
 # CLASSES
@@ -73,7 +73,7 @@ class Diff2:
         Copy from b and push a.
         """
         char = self._get_col_char_at(ij[1])
-        diffa.insert(0, EMPTY)  # Push a
+        diffa.insert(0, EMPTY_SPACE)  # Push a
         diffb.insert(0, char)  # Copy from b
         ij[1] -= 1  # Decrement j
 
@@ -83,7 +83,7 @@ class Diff2:
         """
         char = self._get_row_char_at(ij[0])
         diffa.insert(0, char)  # Copy from a
-        diffb.insert(0, EMPTY)  # Push b
+        diffb.insert(0, EMPTY_SPACE)  # Push b
         ij[0] -= 1  # Decrement i
 
     def _shift(self, ij: list[int], diffa: list[str], diffb: list[str]):

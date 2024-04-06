@@ -1,7 +1,7 @@
 """Tests for the diff2 script."""
 
 import unittest  # TODO: Switch to pytest
-from src.srcdiff import EMPTY
+from src.srcdiff import EMPTY_SPACE
 from src.srcdiff.diff2 import Diff2
 
 
@@ -127,7 +127,7 @@ class TestDiff2(unittest.TestCase):
         Test the push b operation.
         """
         ij = [2, 0]
-        diffa_old = ['p', EMPTY, EMPTY, EMPTY, 'e', 'r']
+        diffa_old = ['p', EMPTY_SPACE, EMPTY_SPACE, EMPTY_SPACE, 'e', 'r']
         diffb_old = ['p', 'o', 's', 't', 'e', 'r']
         diffa = diffa_old.copy()
         diffb = diffb_old.copy()
@@ -137,7 +137,7 @@ class TestDiff2(unittest.TestCase):
 
         self.assertEqual([1, 0], ij)
         self.assertEqual(['a'] + diffa_old, diffa)
-        self.assertEqual([EMPTY] + diffb_old, diffb)
+        self.assertEqual([EMPTY_SPACE] + diffb_old, diffb)
 
     def test_push_a(self):
         """
@@ -151,7 +151,7 @@ class TestDiff2(unittest.TestCase):
         self.diff._push_a(ij, diffa, diffb)
 
         self.assertEqual([3, 3], ij)
-        self.assertEqual([EMPTY, 'e', 'r'], diffa)
+        self.assertEqual([EMPTY_SPACE, 'e', 'r'], diffa)
         self.assertEqual(['t', 'e', 'r'], diffb)
 
     def test_build_diffs(self):
@@ -159,5 +159,5 @@ class TestDiff2(unittest.TestCase):
         self.diff._compute_distance_matrix()
 
         diffa, diffb = self.diff._build_diffs()
-        self.assertEqual(['p', 'a', 'p', EMPTY, EMPTY, EMPTY, 'e', 'r'], diffa)
-        self.assertEqual(['p', EMPTY, EMPTY, 'o', 's', 't', 'e', 'r'], diffb)
+        self.assertEqual(['p', 'a', 'p', EMPTY_SPACE, EMPTY_SPACE, EMPTY_SPACE, 'e', 'r'], diffa)
+        self.assertEqual(['p', EMPTY_SPACE, EMPTY_SPACE, 'o', 's', 't', 'e', 'r'], diffb)

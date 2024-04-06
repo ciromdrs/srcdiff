@@ -1,7 +1,7 @@
 """Tests for the treediff2 script."""
 
 import unittest
-from src.srcdiff import EMPTY
+from src.srcdiff import EMPTY_SPACE
 from src.srcdiff.tree import Tree
 from src.srcdiff.treediff2 import TreeDiff2
 
