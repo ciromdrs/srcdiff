@@ -79,3 +79,21 @@ class TestTreeDiff2(unittest.TestCase):
             with self.subTest(f'Keyroots: A={ikra}, B={ikrb}'):
                 temp = td._create_temp_edit_table(ikra, ikrb)
                 self.assertEqual(temp, expected)
+
+    def test_is_tree_comparison(self):
+        """Tests the is_tree_comparison  method."""
+        td = TreeDiff2(self.example_tree_a, self.example_tree_b)
+        test_data = [
+            ['Nodes', 1, 1, 1, 1, True],
+            ['Node and subtree', 2, 2, 1, 3, True],
+            ['Subtrees', 2, 3, 1, 4, True],
+            ['Subtree and tree', 2, 3, 1, 6, True],
+            ['Trees', 1, 6, 1, 6, True],
+            ['Node and subtrees', 1, 1, 1, 5, False],
+            ['Subtrees', 1, 5, 1, 5, False],
+            ['Subtrees and tree', 1, 5, 1, 6, False],
+        ]
+        for desc, ia0, ia1, ib0, ib1, expected in test_data:
+            with self.subTest(f'{desc} ({expected})'):
+                res = td.is_tree_comparison(ia0, ia1, ib0, ib1)
+                self.assertEqual(res, expected)

@@ -33,6 +33,11 @@ class TreeDiff2:
     
     def _create_temp_edit_table(self, ikra: int, ikrb: int) -> list[list[int]]:
         """Creates a temporary (n+1) x (m+1) tree edit distance table to compute the edit distance between the subtrees rooted at `ikra` and `ikrb`, where n and m are the number elements in the subtree rooted at keyroot a and keyroot b, respectively, and the +1 is for representing the empty trees.
+
+    def is_tree_comparison(self, ia0: int, ia1: int, ib0: int, ib1: int) -> bool:
+        a_is_tree = len(self.a.forest(ia0, ia1)) == 1
+        b_is_tree = len(self.b.forest(ib0, ib1)) == 1
+        return a_is_tree and b_is_tree
         """
         n = len(self.a[ikra]) + 1
         m = len(self.b[ikrb]) + 1
