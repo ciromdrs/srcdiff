@@ -99,6 +99,28 @@ class TestTree(unittest.TestCase):
                 ]),
             ])
             ],
+            ['list.py', Tree('File', value='tests/data/scripts/list.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('List', children=[
+                            Tree('Constant', value='just'),
+                            Tree('Constant', value='a'),
+                            Tree('Constant', value='list'),
+                            Tree('Load'),
+                        ]),
+                    ]),
+                ]),
+            ])],
+            ['dict.py', Tree('File', value='tests/data/scripts/dict.py', children=[
+                Tree('Module', children=[
+                    Tree('Expr', children=[
+                        Tree('Dict', children=[
+                            Tree('Constant', value='just'),
+                            Tree('Constant', value='a dict'),
+                        ]),
+                    ]),
+                ]),
+            ])],
             ['function.py', Tree('File', value='tests/data/scripts/function.py', children=[
                 Tree('Module', children=[
                     Tree('FunctionDef', value='return_a', children=[
