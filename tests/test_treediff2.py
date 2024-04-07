@@ -108,7 +108,6 @@ class TestTreeDiff2(unittest.TestCase):
 
         * ZHANG, K. and SHASHA, D. Simple Fast Algorithms For the Editing Distance Between Trees and Related Problems. 1989. Available at: https://grantjenks.com/wiki/_media/ideas/simple_fast_algorithms_for_the_editing_distance_between_tree_and_related_problems.pdf
         '''
-
         t6_6 = [[0, 1, 2, 3, 4, 5, 6],
                 [1, 0, 1, 2, 3, 4, 5],
                 [2, 1, 0, 1, 2, 3, 4],
