@@ -40,7 +40,7 @@ class TreeDiff2:
         ilkra = self.a.index_of[kra.leftmost_leaf()]
         ilkrb = self.b.index_of[krb.leftmost_leaf()]
         # Create the keyroot edit distance table
-        temp = self._create_keyroot_edit_distance_table(n, m)
+        keyroot_distance_table = self._create_keyroot_edit_distance_table(n, m)
         # Compute the distance between the two subtrees at `kra` and `krb` locally
         for local_i in range(1, n+1):
             for local_j in range(1, m+1):
@@ -49,28 +49,59 @@ class TreeDiff2:
                 global_j = self.b.index_of[krb[local_j]]
                 # Check if it is a tree or a forest comparison
                 if self._is_tree_comparison(ilkra, ikra, ilkrb, ikrb):
-                    # Check if the nodes are equal to get the edit cost
-                    equal, _, _ = kra[local_i].equals(
-                        krb[local_j], compare_children=False)
-                    # Replace cost
-                    rc = int(not equal)  # Equal nodes cost 0, different nodes cost 1
-                    # Tree comparison
-                    temp[local_i][local_j] = min(
-                        temp[local_i-1][local_j-1] + rc,  # Replace
-                        temp[local_i][local_j-1] + 1,     # Insert
-                        temp[local_i-1][local_j] + 1,     # Remove
-                    )
-                    # Copy tree distances to permanent table
-                    self.table[global_i-1][global_j-1] = temp[local_i][local_j]
+                    self._do_tree_diff(kra, krb, local_i, local_j,
+                                       global_i, global_j,
+                                       keyroot_distance_table)
                 else:
-                    # Forest comparison
-                    temp[local_i][local_j] = min(
-                        temp[local_i-1][local_j-1] + \
-                            self.table[global_i-1][global_j-1],  # Replace
-                        temp[local_i][local_j-1] + 1,            # Insert
-                        temp[local_i-1][local_j] + 1,            # Remove
-                    )
-        return temp
+                    self._do_forest_diff(local_i, local_j,
+                                       global_i, global_j,
+                                       keyroot_distance_table)
+        return keyroot_distance_table
+
+    def _do_tree_diff(self, kra: Tree, krb: Tree, local_i: int, local_j: int,
+                      global_i: int, global_j: int,
+                      keyroot_distance_table: list[list[int]]):
+        '''Performs a tree diff operation, which includes:
+        1- Applying the cheapest operation to the diff trees.
+        2- Updating the keyroot edit distance table with the cost of the chosen operation.
+        3- Updating the global edit distance table with the new cost.
+        Parameters (analogous for `b`):
+        - `kra` is the keyroot from tree `a`.
+        - `local_i` is the local index `i` in `kra`.
+        - `global_i` is the global index `i` in tree `a`.
+        - `keyroot_distance_table` is the keyroot edit distance table.
+        '''
+        # Check if the nodes are equal to get the edit cost
+        equal, _, _ = kra[local_i].equals(
+            krb[local_j], compare_children=False)
+        # Replace cost
+        rc = int(not equal)  # Equal nodes cost 0, different nodes cost 1
+        # Tree comparison
+        keyroot_distance_table[local_i][local_j] = min(
+            keyroot_distance_table[local_i-1][local_j-1] + rc,  # Replace
+            keyroot_distance_table[local_i][local_j-1] + 1,     # Insert
+            keyroot_distance_table[local_i-1][local_j] + 1,     # Remove
+        )
+        # Copy tree distances to permanent table
+        self.table[global_i-1][global_j-1] = keyroot_distance_table[local_i][local_j]
+
+    def _do_forest_diff(self, local_i: int, local_j: int,
+                      global_i: int, global_j: int,
+                      keyroot_distance_table: list[list[int]]):
+        '''Performs a forest diff operation, which includes:
+        1- Applying the cheapest operation to the diff trees.
+        2- Updating the keyroot edit distance table with the cost of the chosen operation.
+        Parameters (analogous for `b`):
+        - `local_i` is the local index `i` in `kra`.
+        - `global_i` is the global index `i` in tree `a`.
+        - `keyroot_distance_table` is the keyroot edit distance table.
+        '''
+        keyroot_distance_table[local_i][local_j] = min(
+            keyroot_distance_table[local_i-1][local_j-1] + \
+                self.table[global_i-1][global_j-1],          # Replace
+            keyroot_distance_table[local_i][local_j-1] + 1,  # Insert
+            keyroot_distance_table[local_i-1][local_j] + 1,  # Remove
+        )
 
     def _is_tree_comparison(self, ia0: int, ia1: int, ib0: int, ib1: int) -> bool:
         '''Returns True if both node ranges are trees or False, otherwise.
