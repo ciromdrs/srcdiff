@@ -27,8 +27,8 @@ class TreeDiff2:
                 self._treedist(kra, krb)
         return self.table[len(self.a)][len(self.b)]
 
-    def _treedist(self, kra: Tree, krb: Tree):
-        """Computes the tree edit distance between the subtrees rooted at `kra` and `krb`.
+    def _treedist(self, kra: Tree, krb: Tree) -> list[list[int]]:
+        """Computes the tree edit distance between the subtrees rooted at `kra` and `krb` and updates the global edit distance table.
         `kra` and `krb` are the keyroots `a` and `b`, respectively."""
         # Get the size of the subtrees
         n = len(kra)
