@@ -155,6 +155,17 @@ class Tree:
         out = left_padding + f'Tree({type_}{value}{children})'
         return out
 
+    def copy(self) -> 'Tree':
+        '''Returns a copy of this tree.'''
+        return self._copy(self)
+
+    def _copy(self, node: 'Tree') -> 'Tree':
+        '''Recursively copies node and its children.'''
+        children = []
+        for child in node.children:
+            children += [child.copy()]
+        return Tree(type_=node.type, value=node.value, children=children)
+
     def equals(self, another: 'Tree', compare_children=True) -> tuple[bool, str | None, str | None]:
         """Compares this Tree to another.
 

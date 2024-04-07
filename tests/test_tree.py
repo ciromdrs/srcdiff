@@ -355,3 +355,22 @@ class TestTree(unittest.TestCase):
             subtest_label = f'First: {first}, last: {last}'
             with self.subTest(subtest_label):
                 self.assertEqual(expected, tree.forest(first, last))
+    
+    def test_copy(self):
+        '''Tests the _copy method.'''
+        old = Tree('a', children=[
+            Tree('b'),
+            Tree('c'),
+        ])
+
+        # Assert the copy is identical
+        new = old.copy()
+        self.assertTrue(new.equals(old)[0])  # The [0] gets the boolean
+        # Assert the root is a different object
+        new.type = 'A'
+        self.assertFalse(new.equals(old)[0])
+        new.type = 'a'  # Rollback
+        # Assert the children are different objects too
+        new.children[0].type = 'B'
+        self.assertFalse(new.equals(old)[0])
+        self.assertFalse(new.children[0].equals(old.children[0])[0])
