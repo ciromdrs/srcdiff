@@ -39,13 +39,8 @@ class TreeDiff2:
         # Indices of leftmost leaves of keyroots `a` and `b`, respectively
         ilkra = self.a.index_of[kra.leftmost_leaf()]
         ilkrb = self.b.index_of[krb.leftmost_leaf()]
-        # Create the edit distance table, the +1's are for representing the empty subtree
-        temp = self._create_edit_distance_table(n+1, m+1)
-        # Initialize the edit distance table
-        for i in range(n+1):
-            temp[i][0] = i
-            for j in range(1, m+1):
-                temp[i][j] = j
+        # Create the keyroot edit distance table
+        temp = self._create_keyroot_edit_distance_table(n, m)
         # Compute the distance between the two subtrees at `kra` and `krb` locally
         for local_i in range(1, n+1):
             for local_j in range(1, m+1):
@@ -92,6 +87,21 @@ class TreeDiff2:
                 aux += [-1]
             table += [aux]
         return table
+
+    def _create_keyroot_edit_distance_table(self, n: int, m: int) -> list[list[int]]:
+        """Creates an `(n+1)*(m+1)` keyroot edit distance table, where `n` and `m` are the number elements in the subtrees rooted at keyroots `a` and `b`, respectively.
+        """
+        # The +1's are for representing empty trees
+        temp = self._create_edit_distance_table(n+1, m+1)
+        # Initialize the table
+        for j in range(m+1):
+            temp[0][j] = j  # First row is [0, 1, 2, ...]
+        for i in range(1, n+1):
+            temp[i][0] = i  # First column is [[0, ...], [1, ...], [2, ...], ...]
+            for j in range(1, m+1):
+                temp[i][j] = -1  # The remaining elements are -1
+        return temp
+        
 
 
 # FUNCTIONS

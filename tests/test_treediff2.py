@@ -60,6 +60,31 @@ class TestTreeDiff2(unittest.TestCase):
                 created = td._create_edit_distance_table(n, m)
                 self.assertEqual(created, expected)
 
+    def test_create_keyroot_edit_distance_table(self):
+        """Tests if the keyroot edit distance table is created correctly."""
+        td = TreeDiff2(self.example_tree_a, self.example_tree_b)
+        # The tables below are expected keyroot edit distance tables
+        t1x1 = [[0,  1],
+                [1, -1]]
+        t1x2 = [[0,  1,  2],
+                [1, -1, -1]]
+        t2x1 = [[0,  1],
+                [1, -1],
+                [2, -1]]
+        t2x2 = [[0,  1,  2],
+                [1, -1, -1],
+                [2, -1, -1]]
+        test_data = [
+            [1, 1, t1x1],
+            [1, 2, t1x2],
+            [2, 1, t2x1],
+            [2, 2, t2x2],
+        ]
+        for ikra, ikrb, expected in test_data:
+            with self.subTest(f'Keyroots: A={ikra}, B={ikrb}'):
+                temp = td._create_keyroot_edit_distance_table(ikra, ikrb)
+                self.assertEqual(temp, expected)
+
     def test_treedist(self):
         """Tests if the tree edit distance is computed correctly."""
         td = TreeDiff2(self.example_tree_a, self.example_tree_b)
