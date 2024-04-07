@@ -73,6 +73,9 @@ class TreeDiff2:
         return temp
 
     def _is_tree_comparison(self, ia0: int, ia1: int, ib0: int, ib1: int) -> bool:
+        '''Returns True if both node ranges are trees or False, otherwise.
+        `ia0` and `ia1` are the first and last node indices in tree `a` (analogous for `b`).
+        '''
         a_is_tree = len(self.a.forest(ia0, ia1)) == 1
         b_is_tree = len(self.b.forest(ib0, ib1)) == 1
         return a_is_tree and b_is_tree
